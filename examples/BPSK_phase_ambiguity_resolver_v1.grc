@@ -1,0 +1,576 @@
+options:
+  parameters:
+    author: Gustavo Gonzalez
+    catch_exceptions: 'True'
+    category: '[Satellite Tools]/Phase Disambiguity'
+    cmake_opt: ''
+    comment: ''
+    copyright: ''
+    description: Resolves Phase Ambiguity in a BPSK input bits
+    gen_cmake: 'On'
+    gen_linking: dynamic
+    generate_options: hb
+    hier_block_src_path: '.:'
+    id: bpsk_phase_ambiguity_solver_bb
+    max_nouts: '0'
+    output_language: python
+    placement: (0,0)
+    qt_qss_theme: ''
+    realtime_scheduling: ''
+    run: 'True'
+    run_command: '{python} -u {filename}'
+    run_options: prompt
+    sizing_mode: fixed
+    thread_safe_setters: ''
+    title: BPSK Phase Ambiguity Solver
+    window_size: (1000,1000)
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [8, 12.0]
+    rotation: 0
+    state: enabled
+
+blocks:
+- name: samp_rate
+  id: variable
+  parameters:
+    comment: ''
+    value: '32000'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [192, 12.0]
+    rotation: 0
+    state: enabled
+- name: syncword_cc
+  id: variable
+  parameters:
+    comment: ''
+    value: np.asarray(list(chain.from_iterable([list(j) for j in ([bin(int(i,16))[2:].zfill(4)
+      for i in list(syncword_cc_hex)])]))).astype('int') * 2 -1
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [288, 108.0]
+    rotation: 0
+    state: true
+- name: blocks_char_to_float_0_0_1
+  id: blocks_char_to_float
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    scale: '1'
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [400, 204.0]
+    rotation: 0
+    state: true
+- name: blocks_float_to_char_0
+  id: blocks_float_to_char
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    scale: '1'
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1168, 156.0]
+    rotation: 0
+    state: true
+- name: blocks_float_to_char_0_1
+  id: blocks_float_to_char
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    scale: '1'
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1168, 268.0]
+    rotation: 0
+    state: true
+- name: blocks_multiply_const_vxx_0_1_0_2_0_0
+  id: blocks_multiply_const_vxx
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    const: '-1'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    type: float
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [832, 268.0]
+    rotation: 0
+    state: true
+- name: blocks_or_xx_0_0_0_0_0
+  id: blocks_or_xx
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    num_inputs: '2'
+    type: byte
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1376, 200.0]
+    rotation: 0
+    state: true
+- name: blocks_threshold_ff_0
+  id: blocks_threshold_ff
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    high: (syncword_cc.size) - 0.5 - error_tolerance
+    init: '0'
+    low: (syncword_cc.size) - 0.5 - error_tolerance
+    maxoutbuf: '0'
+    minoutbuf: '0'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [832, 140.0]
+    rotation: 0
+    state: true
+- name: blocks_threshold_ff_0_1
+  id: blocks_threshold_ff
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    high: (syncword_cc.size/2) - 0.5 -  error_tolerance
+    init: '0'
+    low: (syncword_cc.size/2) - 0.5 - error_tolerance
+    maxoutbuf: '0'
+    minoutbuf: '0'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1008, 252.0]
+    rotation: 0
+    state: true
+- name: digital_map_bb_0_0
+  id: digital_map_bb
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    map: '[1,0]'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [720, 572.0]
+    rotation: 0
+    state: true
+- name: digital_map_bb_0_1
+  id: digital_map_bb
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    map: '[int((-1)*syncword_cc.size),int(syncword_cc.size)]'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [256, 204.0]
+    rotation: 0
+    state: true
+- name: error_tolerance
+  id: parameter
+  parameters:
+    alias: ''
+    comment: ''
+    hide: none
+    label: Error Tolerance
+    short_id: ''
+    type: intx
+    value: '0'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [472, 12.0]
+    rotation: 0
+    state: true
+- name: fir_filter_xxx_1_0_1_0_1
+  id: fir_filter_xxx
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    decim: '1'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    samp_delay: '0'
+    taps: syncword_cc[::-1]/syncword_cc.size
+    type: fff
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [576, 196.0]
+    rotation: 0
+    state: true
+- name: import_1
+  id: import
+  parameters:
+    alias: ''
+    comment: ''
+    imports: import numpy as np
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [192, 76.0]
+    rotation: 0
+    state: true
+- name: import_1_0_0
+  id: import
+  parameters:
+    alias: ''
+    comment: ''
+    imports: from itertools import chain
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [8, 140.0]
+    rotation: 0
+    state: true
+- name: lock_msg
+  id: parameter
+  parameters:
+    alias: ''
+    comment: ''
+    hide: part
+    label: Lock Msg
+    short_id: ''
+    type: str
+    value: LOCK
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [608, 12.0]
+    rotation: 0
+    state: true
+- name: pad_sink_0
+  id: pad_sink
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    label: out
+    num_streams: '1'
+    optional: 'False'
+    type: byte
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1152, 540.0]
+    rotation: 0
+    state: true
+- name: pad_sink_0_0
+  id: pad_sink
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    label: msg
+    num_streams: '1'
+    optional: 'False'
+    type: message
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1680, 212.0]
+    rotation: 0
+    state: true
+- name: pad_source_0
+  id: pad_source
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    label: in
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    num_streams: '1'
+    optional: 'False'
+    type: byte
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [80, 204.0]
+    rotation: 0
+    state: true
+- name: satellite_tools_latch_selector_0_0_0_1
+  id: satellite_tools_latch_selector
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    reset_key: RESET
+    set_key: SET
+    toggle_key: TOGGLE
+    type: byte
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [912, 512.0]
+    rotation: 0
+    state: true
+- name: satellite_tools_threshold_tag_0
+  id: satellite_tools_threshold_tag
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    en_high: 'True'
+    en_low: 'False'
+    high: '1'
+    high_key: pmt.intern('RESET')
+    initial_state: '0'
+    low: '0'
+    low_key: pmt.intern('LOW')
+    maxoutbuf: '0'
+    minoutbuf: '0'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [656, 324.0]
+    rotation: 0
+    state: true
+- name: satellite_tools_threshold_tag_0_0
+  id: satellite_tools_threshold_tag
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    en_high: 'True'
+    en_low: 'False'
+    high: '1'
+    high_key: pmt.intern('SET')
+    initial_state: '0'
+    low: '0'
+    low_key: pmt.intern('LOW')
+    maxoutbuf: '0'
+    minoutbuf: '0'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [656, 436.0]
+    rotation: 0
+    state: true
+- name: satellite_tools_threshold_tag_1
+  id: satellite_tools_threshold_tag
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    en_high: 'True'
+    en_low: 'True'
+    high: '1'
+    high_key: lock_msg
+    initial_state: '0'
+    low: '0'
+    low_key: unlock_msg
+    maxoutbuf: '0'
+    minoutbuf: '0'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1488, 204.0]
+    rotation: 0
+    state: true
+- name: syncword_cc_hex
+  id: parameter
+  parameters:
+    alias: ''
+    comment: ''
+    hide: none
+    label: Syncword
+    short_id: ''
+    type: str
+    value: '''1ACFFC1D'''
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [288, 12.0]
+    rotation: 0
+    state: true
+- name: unlock_msg
+  id: parameter
+  parameters:
+    alias: ''
+    comment: ''
+    hide: part
+    label: Unlock Msg
+    short_id: ''
+    type: str
+    value: UNLOCK
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [712, 12.0]
+    rotation: 0
+    state: true
+- name: virtual_sink_0
+  id: virtual_sink
+  parameters:
+    alias: ''
+    comment: ''
+    stream_id: In_Phase
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1360, 124.0]
+    rotation: 0
+    state: true
+- name: virtual_sink_0_0
+  id: virtual_sink
+  parameters:
+    alias: ''
+    comment: ''
+    stream_id: Off_Phase
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1360, 308.0]
+    rotation: 0
+    state: true
+- name: virtual_sink_0_0_2_0
+  id: virtual_sink
+  parameters:
+    alias: ''
+    comment: ''
+    stream_id: Input_Stream
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [264, 268.0]
+    rotation: 0
+    state: true
+- name: virtual_source_0_0_1_2_0_0
+  id: virtual_source
+  parameters:
+    alias: ''
+    comment: ''
+    stream_id: Off_Phase
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [448, 444.0]
+    rotation: 0
+    state: true
+- name: virtual_source_0_0_2_0_0_0_1
+  id: virtual_source
+  parameters:
+    alias: ''
+    comment: ''
+    stream_id: Input_Stream
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [480, 540.0]
+    rotation: 0
+    state: true
+- name: virtual_source_0_1_2_0_0
+  id: virtual_source
+  parameters:
+    alias: ''
+    comment: ''
+    stream_id: In_Phase
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [464, 332.0]
+    rotation: 0
+    state: true
+
+connections:
+- [blocks_char_to_float_0_0_1, '0', fir_filter_xxx_1_0_1_0_1, '0']
+- [blocks_float_to_char_0, '0', blocks_or_xx_0_0_0_0_0, '0']
+- [blocks_float_to_char_0, '0', virtual_sink_0, '0']
+- [blocks_float_to_char_0_1, '0', blocks_or_xx_0_0_0_0_0, '1']
+- [blocks_float_to_char_0_1, '0', virtual_sink_0_0, '0']
+- [blocks_multiply_const_vxx_0_1_0_2_0_0, '0', blocks_threshold_ff_0_1, '0']
+- [blocks_or_xx_0_0_0_0_0, '0', satellite_tools_threshold_tag_1, '0']
+- [blocks_threshold_ff_0, '0', blocks_float_to_char_0, '0']
+- [blocks_threshold_ff_0_1, '0', blocks_float_to_char_0_1, '0']
+- [digital_map_bb_0_0, '0', satellite_tools_latch_selector_0_0_0_1, '1']
+- [digital_map_bb_0_1, '0', blocks_char_to_float_0_0_1, '0']
+- [fir_filter_xxx_1_0_1_0_1, '0', blocks_multiply_const_vxx_0_1_0_2_0_0, '0']
+- [fir_filter_xxx_1_0_1_0_1, '0', blocks_threshold_ff_0, '0']
+- [pad_source_0, '0', digital_map_bb_0_1, '0']
+- [pad_source_0, '0', virtual_sink_0_0_2_0, '0']
+- [satellite_tools_latch_selector_0_0_0_1, '0', pad_sink_0, '0']
+- [satellite_tools_threshold_tag_0, cmd, satellite_tools_latch_selector_0_0_0_1, ctrl]
+- [satellite_tools_threshold_tag_0_0, cmd, satellite_tools_latch_selector_0_0_0_1,
+  ctrl]
+- [satellite_tools_threshold_tag_1, cmd, pad_sink_0_0, in]
+- [virtual_source_0_0_1_2_0_0, '0', satellite_tools_threshold_tag_0_0, '0']
+- [virtual_source_0_0_2_0_0_0_1, '0', digital_map_bb_0_0, '0']
+- [virtual_source_0_0_2_0_0_0_1, '0', satellite_tools_latch_selector_0_0_0_1, '0']
+- [virtual_source_0_1_2_0_0, '0', satellite_tools_threshold_tag_0, '0']
+
+metadata:
+  file_format: 1
