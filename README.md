@@ -21,45 +21,45 @@ cd build
 sudo make uninstall
 sudo ldconfig
 
-# QPSK Phase Ambiguity Solver
+## QPSK Phase Ambiguity Solver
 This block will solves the 90º phase rotation and invertion ambiguity in a QPSK demodulated signal when the signal has ASM
 
 The input signal is the demodulated bit stream with phase ambiguity and the output is the same signal but with the ambiguity solved 
-## Parameters
+### Parameters
 (R): Run-time adjustable
-### Error Tolerance (R)
+#### Error Tolerance (R)
 Set the number of bit than can be “skipped” from the ASM correlation as ASM bit error ignoring
-### Syncword (R)
+#### Syncword (R)
 Set syncword to look for Phase Ambiguity resolution as hex string, the hex string could have an odd number of characters 
-### Lock Msg
+#### Lock Msg
 Set the command message send through the message port when ASM is detected
 
-## Messages
-### LOCK
+### Messages
+#### LOCK
 The pair (Lock Msg, phase value) message sent when the ASM is detected. Phase value integer could be 0, 90, 180, 270, -0, -90, -180, -270
 
-## Example Flowgraph
+### Example Flowgraph
 This example flowgraph qpsk_phase_ambiguity_solver_test_v1.grc is located in the gr-com_tools package
  
 In this example, the bytes of and input files are convolutional codec and QPSK modulated. The modulated signal is rotated 0º, 90º, 180º or 270º and each of these rotation are I-Q inverted. A Selector allows to choose with signal is demodulated. At the QPSK demodulator output, a QPSK Phase ambiguity solver will resolve the phase ambiguity and the “fixed” signal is decode and the the PDUs when Syncmark start are generated and stored in an output file.
 
-# BPSK Phase Ambiguity Solver
+## BPSK Phase Ambiguity Solver
 This block will solves the 180º phase ambiguity in a BPSK demodulated signal when the signal has a sync mark (ASM)
 
 The input signal is the demodulated bit stream with phase ambiguity and the output is the same signal but with the ambiguity solved 
-## Parameters
+### Parameters
 (R): Run-time adjustable
-### Error Tolerance (R)
+#### Error Tolerance (R)
 Set the number of bit than can be “skipped” from the ASM correlation as ASM bit error ignoring
-### Syncword (R)
+#### Syncword (R)
 Set syncword to look for Phase Ambiguity resolution as hex string 
-### Lock Msg
+#### Lock Msg
 Set the command message send through the message port when ASM is detected
 
-## Messages
-### LOCK
+### Messages
+#### LOCK
 The pair (Lock Msg, phase value) message sent when the ASM is detected. Phase value integer could be 0 or 180
-## Example Flowgraph
+### Example Flowgraph
 This example flowgraph bpsk_phase_ambiguity_solver_test_v1.grc is located in the gr-com_tools package
  
 In this example, the bytes of and input files are BPSK modulated. The modulated signal is rotated 0º, or 180º. A Selector allows to choose with signal is demodulated. At the BPSK demodulator output, a BPSK Phase ambiguity solver will resolve the phase ambiguity and the “fixed” signal is decode and the the PDUs when Syncmark start are generated and stored in an output file.
