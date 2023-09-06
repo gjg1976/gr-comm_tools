@@ -1,0 +1,545 @@
+options:
+  parameters:
+    author: Gustavo Gonzalez
+    catch_exceptions: 'True'
+    category: '[GRC Hier Blocks]'
+    cmake_opt: ''
+    comment: ''
+    copyright: ''
+    description: This flow graph will test BPS Phase Ambiguity resolver block
+    gen_cmake: 'On'
+    gen_linking: dynamic
+    generate_options: qt_gui
+    hier_block_src_path: '.:'
+    id: bpsk_phase_ambiguity_resolver_test_v1
+    max_nouts: '0'
+    output_language: python
+    placement: (0,0)
+    qt_qss_theme: ''
+    realtime_scheduling: ''
+    run: 'True'
+    run_command: '{python} -u {filename}'
+    run_options: prompt
+    sizing_mode: fixed
+    thread_safe_setters: ''
+    title: BPSK Phase Ambiguity Resolver Test v1
+    window_size: (1000,1000)
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [8, 24.0]
+    rotation: 0
+    state: enabled
+
+blocks:
+- name: access_code
+  id: variable
+  parameters:
+    comment: ''
+    value: '''''.join([str(i) for i in (syncword+1)//2])[-64:]'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [928, 28.0]
+    rotation: 0
+    state: true
+- name: nfilts
+  id: variable
+  parameters:
+    comment: ''
+    value: '32'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [336, 28.0]
+    rotation: 0
+    state: enabled
+- name: rrc_taps
+  id: variable
+  parameters:
+    comment: ''
+    value: firdes.root_raised_cosine(nfilts, nfilts, 1.0/float(sps), 0.35, 45*nfilts)
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [488, 28.0]
+    rotation: 0
+    state: enabled
+- name: samp_rate
+  id: variable
+  parameters:
+    comment: ''
+    value: 64000*sps
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [176, 28.0]
+    rotation: 0
+    state: enabled
+- name: sps
+  id: variable
+  parameters:
+    comment: ''
+    value: '20'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [264, 28.0]
+    rotation: 0
+    state: enabled
+- name: syncword
+  id: variable
+  parameters:
+    comment: ''
+    value: 2*np.unpackbits(np.frombuffer(bytes.fromhex(syncword_hex), dtype = 'uint8')).astype('int')-1
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [760, 28.0]
+    rotation: 0
+    state: true
+- name: syncword_hex
+  id: variable
+  parameters:
+    comment: ''
+    value: '''1ACFFC1D'''
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [648, 28.0]
+    rotation: 0
+    state: true
+- name: variable_constellation_rect_qpsk
+  id: variable_constellation_rect
+  parameters:
+    comment: ''
+    const_points: '[1, -1]'
+    imag_sect: '2'
+    precision: '8'
+    real_sect: '2'
+    rot_sym: '2'
+    soft_dec_lut: None
+    sym_map: '[0, 1]'
+    w_imag_sect: '1'
+    w_real_sect: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [280, 356.0]
+    rotation: 0
+    state: true
+- name: variable_qtgui_chooser_1
+  id: variable_qtgui_chooser
+  parameters:
+    comment: ''
+    gui_hint: 1,1,1,2
+    label: Phase Rotation
+    label0: "Phase 0\u0970"
+    label1: "Phase 180\u0970"
+    label2: ''
+    label3: ''
+    label4: ''
+    labels: '[]'
+    num_opts: '2'
+    option0: '0'
+    option1: '1'
+    option2: '2'
+    option3: '3'
+    option4: '4'
+    options: '[0, 1, 2]'
+    orient: Qt.QVBoxLayout
+    type: int
+    value: '0'
+    widget: combo_box
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [536, 352.0]
+    rotation: 0
+    state: true
+- name: analog_const_source_x_0_0
+  id: analog_const_source_x
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    const: '-1'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    type: complex
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [328, 284.0]
+    rotation: 0
+    state: true
+- name: blocks_file_sink_0_1
+  id: blocks_file_sink
+  parameters:
+    affinity: ''
+    alias: ''
+    append: 'False'
+    comment: ''
+    file: /home/modem/041404/bpsk_output
+    type: byte
+    unbuffered: 'False'
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1176, 524.0]
+    rotation: 0
+    state: true
+- name: blocks_file_source_0
+  id: blocks_file_source
+  parameters:
+    affinity: ''
+    alias: ''
+    begin_tag: pmt.PMT_NIL
+    comment: ''
+    file: /home/modem/041404/Viterbi/random_AOS_frames.bin
+    length: '0'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    offset: '0'
+    repeat: 'True'
+    type: byte
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [32, 228.0]
+    rotation: 0
+    state: true
+- name: blocks_message_debug_0
+  id: blocks_message_debug
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    en_uvec: 'True'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [872, 664.0]
+    rotation: 0
+    state: true
+- name: blocks_multiply_xx_0_0
+  id: blocks_multiply_xx
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    num_inputs: '2'
+    type: complex
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [552, 256.0]
+    rotation: 0
+    state: true
+- name: blocks_pack_k_bits_bb_0_1_0
+  id: blocks_pack_k_bits_bb
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    k: '8'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1024, 540.0]
+    rotation: 0
+    state: true
+- name: blocks_selector_0_0_0
+  id: blocks_selector
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    enabled: 'True'
+    input_index: variable_qtgui_chooser_1
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    num_inputs: '2'
+    num_outputs: '1'
+    output_index: '0'
+    showports: 'True'
+    type: complex
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [720, 156.0]
+    rotation: 0
+    state: true
+- name: blocks_throttle_0
+  id: blocks_throttle
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    ignoretag: 'True'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    samples_per_second: samp_rate
+    type: byte
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [80, 172.0]
+    rotation: 0
+    state: true
+- name: comm_tools_bpsk_phase_ambiguity_solver_0
+  id: comm_tools_bpsk_phase_ambiguity_solver
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    sync_word: 1ACFFC1D
+    tag_lock_name: LOCK
+    tolerance: '0'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1048, 332.0]
+    rotation: 0
+    state: true
+- name: digital_constellation_decoder_cb_0_1
+  id: digital_constellation_decoder_cb
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    constellation: variable_constellation_rect_qpsk
+    maxoutbuf: '0'
+    minoutbuf: '0'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [792, 348.0]
+    rotation: 0
+    state: true
+- name: digital_constellation_modulator_0
+  id: digital_constellation_modulator
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    constellation: variable_constellation_rect_qpsk
+    differential: 'False'
+    excess_bw: '0.35'
+    log: 'False'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    samples_per_symbol: sps
+    truncate: 'False'
+    verbose: 'False'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [272, 148.0]
+    rotation: 0
+    state: true
+- name: digital_correlate_access_code_tag_xx_0
+  id: digital_correlate_access_code_tag_xx
+  parameters:
+    access_code: access_code
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    tagname: syncword
+    threshold: '0'
+    type: byte
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [768, 444.0]
+    rotation: 0
+    state: true
+- name: digital_symbol_sync_xx_0
+  id: digital_symbol_sync_xx
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    constellation: digital.constellation_qpsk().base()
+    damping: '1.0'
+    loop_bw: '0.0628'
+    max_dev: '1.5'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    nfilters: nfilts
+    osps: '1'
+    pfb_mf_taps: rrc_taps
+    resamp_type: digital.IR_PFB_MF
+    sps: sps
+    ted_gain: '1.0'
+    ted_type: digital.TED_SIGNAL_TIMES_SLOPE_ML
+    type: cc
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [936, 116.0]
+    rotation: 0
+    state: true
+- name: import_1
+  id: import
+  parameters:
+    alias: ''
+    comment: ''
+    imports: import numpy as np
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [408, 28.0]
+    rotation: 0
+    state: true
+- name: pdu_pdu_to_tagged_stream_0
+  id: pdu_pdu_to_tagged_stream
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    tag: packet_len
+    type: byte
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [784, 540.0]
+    rotation: 0
+    state: true
+- name: pdu_utils_pack_unpack_0
+  id: pdu_utils_pack_unpack
+  parameters:
+    affinity: ''
+    alias: ''
+    bit_order: pdu_utils.BIT_ORDER_MSB_FIRST
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    mode: pdu_utils.MODE_PACK_BYTE
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1104, 664.0]
+    rotation: 0
+    state: true
+- name: pdu_utils_tags_to_pdu_X_0
+  id: pdu_utils_tags_to_pdu_X
+  parameters:
+    affinity: ''
+    alias: ''
+    boost_time: 'False'
+    cfg_port: 'False'
+    comment: ''
+    end_tag: EOB
+    eob_alignment: '1'
+    eob_offset: '0'
+    max_pdu_size: 1024*8
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    prepend: '[]'
+    pub_det: 'False'
+    rate: samp_rate
+    start_tag: syncword
+    start_time: '0.0'
+    tail_size: '0'
+    type: b
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1056, 432.0]
+    rotation: 0
+    state: true
+- name: virtual_sink_0
+  id: virtual_sink
+  parameters:
+    alias: ''
+    comment: ''
+    stream_id: asm_lock
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1312, 364.0]
+    rotation: 0
+    state: true
+- name: virtual_source_0
+  id: virtual_source
+  parameters:
+    alias: ''
+    comment: ''
+    stream_id: asm_lock
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [560, 644.0]
+    rotation: 0
+    state: true
+
+connections:
+- [analog_const_source_x_0_0, '0', blocks_multiply_xx_0_0, '1']
+- [blocks_file_source_0, '0', blocks_throttle_0, '0']
+- [blocks_multiply_xx_0_0, '0', blocks_selector_0_0_0, '1']
+- [blocks_pack_k_bits_bb_0_1_0, '0', blocks_file_sink_0_1, '0']
+- [blocks_selector_0_0_0, '0', digital_symbol_sync_xx_0, '0']
+- [blocks_throttle_0, '0', digital_constellation_modulator_0, '0']
+- [comm_tools_bpsk_phase_ambiguity_solver_0, '0', digital_correlate_access_code_tag_xx_0,
+  '0']
+- [comm_tools_bpsk_phase_ambiguity_solver_0, msg, virtual_sink_0, '0']
+- [digital_constellation_decoder_cb_0_1, '0', comm_tools_bpsk_phase_ambiguity_solver_0,
+  '0']
+- [digital_constellation_modulator_0, '0', blocks_multiply_xx_0_0, '0']
+- [digital_constellation_modulator_0, '0', blocks_selector_0_0_0, '0']
+- [digital_correlate_access_code_tag_xx_0, '0', pdu_utils_tags_to_pdu_X_0, '0']
+- [digital_symbol_sync_xx_0, '0', digital_constellation_decoder_cb_0_1, '0']
+- [pdu_pdu_to_tagged_stream_0, '0', blocks_pack_k_bits_bb_0_1_0, '0']
+- [pdu_utils_pack_unpack_0, pdu_out, blocks_message_debug_0, print]
+- [pdu_utils_tags_to_pdu_X_0, pdu_out, pdu_pdu_to_tagged_stream_0, pdus]
+- [pdu_utils_tags_to_pdu_X_0, pdu_out, pdu_utils_pack_unpack_0, pdu_in]
+- [virtual_source_0, '0', blocks_message_debug_0, print]
+
+metadata:
+  file_format: 1
+  grc_version: 3.10.3.0

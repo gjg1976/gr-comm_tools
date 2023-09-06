@@ -1,0 +1,6 @@
+/*!
+ * \defgroup block GNU Radio COMM_TOOLS C++ Signal Processing Blocks
+ * \brief All C++ blocks that can be used from the COMM_TOOLS GNU Radio
+ *        module are listed here or in the subcategories below.
+ *
+ */

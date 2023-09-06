@@ -1,0 +1,57 @@
+id: comm_tools_qpsk_phase_ambiguity_solver
+label: QPSK Phase Ambiguity Solver
+category: '[Comm Tools]/Ambiguity Solvers'
+
+templates:
+  imports: from gnuradio import comm_tools
+  make: comm_tools.qpsk_phase_ambiguity_solver(${sync_word}, ${tolerance}, ${tag_lock_name})
+  callbacks:
+  - set_sync_word(${sync_word})
+  - set_tolerance(${tolerance})
+  
+parameters:
+-   id: sync_word
+    label: Sync Word
+    dtype: string
+    default: '1ACFFC1D'
+-   id: tolerance
+    label: Error Tolerance
+    dtype: int
+    default: 0
+-   id: tag_lock_name
+    label: Tag on Lock
+    dtype: string
+    default: 'LOCK'
+
+inputs:
+-   domain: stream
+    dtype: byte
+    label: i_in
+-   domain: stream
+    dtype: byte
+    label: q_in
+outputs:
+-   domain: stream
+    dtype: byte
+-   domain: message
+    id: msg
+    optional: true
+    
+documentation: 'Gustavo Gonzalez
+    
+    Resolves the phase ambiguity of QPSK modulation using through the search of the Sync Mark 
+    
+    Parameters:
+    
+    Sync Word: the sync word to looking for, used for phase correction and frame syncronization
+    Error Tolerance: how many bit errors are tolerated in the looking of the Sync Word correlation
+    Tag on Lock: the tag to send through the message port when Sync Word is detected, the message is a pair (Tag on Lock, 0) when the signal is in phase 
+
+    Input/ouput:
+    
+        		      
+    input = bit stream from QPSK constellation decoder, one per the I symbol bits and another one per Q symbol bits
+    ouput = bit stream with fixed phase'
+#  'file_format' specifies the version of the GRC yml format used in the file
+#  and should usually not be changed.
+file_format: 1

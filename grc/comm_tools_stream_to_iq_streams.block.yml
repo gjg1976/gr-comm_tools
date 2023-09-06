@@ -1,0 +1,33 @@
+id: comm_tools_stream_to_iq_streams
+label: Stream to IQ Streams
+category: '[Comm Tools]/Tools'
+
+templates:
+  imports: from gnuradio import comm_tools
+  make: comm_tools.stream_to_iq_streams()
+
+parameters:
+
+inputs:
+-   domain: stream
+    dtype: byte
+
+outputs:
+-   domain: stream
+    dtype: byte
+    label: i_out     
+-   domain: stream
+    dtype: byte
+    label: q_out   
+    
+documentation: 'Gustavo Gonzalez
+    
+    Split a bit stream from a QPSK constellation decoder into two stream with the bit from I part of a Symbol and Q part
+    
+    Parameters:
+    		      
+    input = bit stream from QPSK constellation decoder
+    ouput = two bit streams one per the I symbol bits and another one per Q symbol bits'     
+#  'file_format' specifies the version of the GRC yml format used in the file
+#  and should usually not be changed.
+file_format: 1

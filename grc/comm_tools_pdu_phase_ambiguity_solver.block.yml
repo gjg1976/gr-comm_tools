@@ -1,0 +1,70 @@
+id: comm_tools_pdu_phase_ambiguity_solver
+label: PDU Phase Ambiguity Solver
+category: '[Comm Tools]/Ambiguity Solvers'
+
+templates:
+    imports: from gnuradio import comm_tools
+    make: comm_tools.pdu_phase_ambiguity_solver(${modulation}, ${sync_word}, ${tolerance}, ${tag_lock_name})
+    callbacks:
+    - set_sync_word(${sync_word})
+    - set_tolerance(${tolerance})
+  
+parameters:
+-   id: modulation
+    label: Modulation
+    dtype: enum
+    options: ['0', '1']
+    option_labels: [BPSK, QPSK]
+-   id: sync_word
+    label: Sync Word
+    dtype: string
+    default: '1ACFFC1D'
+-   id: tolerance
+    label: Error Tolerance
+    dtype: int
+    default: 0
+-   id: tag_lock_name
+    label: Tag on Lock
+    dtype: string
+    default: 'LOCK'
+         
+inputs:
+-   domain: message
+    id: pdu_in
+
+outputs:
+-   domain: message
+    id: pdu_out
+    optional: true
+-   domain: message
+    id: msg
+    optional: true
+
+cpp_templates:
+    includes: ['#include <gnuradio/comm_tools/pdu_phase_ambiguity_solver.h>']
+    declarations: 'gr::comm_tools::pdu_phase_ambiguity_solver::sptr ${id};'
+    make: 'this->${id} = gr::comm_tools::pdu_phase_ambiguity_solver::make(${modulation}, ${sync_word}, ${tolerance}, ${tag_lock_name});'
+    link: ['gr::comm_tools']    
+    callbacks:
+    - set_sync_word(${sync_word})
+    - set_tolerance(${tolerance})
+    
+documentation: 'Gustavo Gonzalez
+    
+    Resolves the phase ambiguity of either BPSK or QPSK modulation through the search of the Sync Mark 
+    
+    Parameters:
+    
+    Modulation: Solves BPSK modulation or QPSK modulation. For QPSK if the PDU input data is even, then it will look for ASM starting from Byte 0, if no ASM found, then will run again starting from Byte 1
+    Sync Word: the sync word to looking for, used for phase correction and frame syncronization
+    Error Tolerance: how many bit errors are tolerated in the looking of the Sync Word correlation
+    Tag on Lock: the tag to send through the message port when Sync Word is detected, the message is a pair (Tag on Lock, 0) when the signal is in phase 
+
+    Input/ouput:
+    
+        		      
+    input = bit PDU from BPSK/QPSK constellation decoder, for QPSK one bit is used by I in symbol and another one by Q in symbol
+    ouput = bit PDU with fixed phase'
+    #  'file_format' specifies the version of the GRC yml format used in the file
+#  and should usually not be changed.
+file_format: 1

@@ -1,0 +1,331 @@
+options:
+  parameters:
+    author: Gustavo Gonzalez
+    catch_exceptions: 'True'
+    category: '[GRC Hier Blocks]'
+    cmake_opt: ''
+    comment: ''
+    copyright: ''
+    description: ''
+    gen_cmake: 'On'
+    gen_linking: dynamic
+    generate_options: qt_gui
+    hier_block_src_path: '.:'
+    id: pdu_ambiguity_solver_test_v1
+    max_nouts: '0'
+    output_language: python
+    placement: (0,0)
+    qt_qss_theme: ''
+    realtime_scheduling: ''
+    run: 'True'
+    run_command: '{python} -u {filename}'
+    run_options: prompt
+    sizing_mode: fixed
+    thread_safe_setters: ''
+    title: 'PDU Ambiguity Solver Test '
+    window_size: (1000,1000)
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [8, 8]
+    rotation: 0
+    state: enabled
+
+blocks:
+- name: samp_rate
+  id: variable
+  parameters:
+    comment: ''
+    value: '32000'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [184, 12]
+    rotation: 0
+    state: enabled
+- name: blocks_message_debug_0_0
+  id: blocks_message_debug
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    en_uvec: 'True'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [736, 208.0]
+    rotation: 0
+    state: true
+- name: blocks_message_debug_0_0_0
+  id: blocks_message_debug
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    en_uvec: 'True'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [744, 360.0]
+    rotation: 0
+    state: true
+- name: blocks_message_strobe_0
+  id: blocks_message_strobe
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    msg: pmt.intern("trg")
+    period: '3000'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [56, 140.0]
+    rotation: 0
+    state: enabled
+- name: comm_tools_pdu_phase_ambiguity_solver_0
+  id: comm_tools_pdu_phase_ambiguity_solver
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    modulation: '0'
+    sync_word: 1ACFFC1D
+    tag_lock_name: LOCK
+    tolerance: '0'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [384, 196.0]
+    rotation: 0
+    state: enabled
+- name: comm_tools_pdu_phase_ambiguity_solver_0_0
+  id: comm_tools_pdu_phase_ambiguity_solver
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    modulation: '1'
+    sync_word: 1ACFFC1D
+    tag_lock_name: LOCK
+    tolerance: '0'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [384, 348.0]
+    rotation: 0
+    state: true
+- name: satellite_tools_pdu_vector_source_0_0
+  id: satellite_tools_pdu_vector_source
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    vector: (1,1,0,0,0,1,1,0,1,0,1,1,0,0,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,1,1,1,0,1,0,0,0,0,0)
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [112, 220.0]
+    rotation: 0
+    state: enabled
+- name: satellite_tools_pdu_vector_source_0_0_0
+  id: satellite_tools_pdu_vector_source
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    vector: (3, 0, 1, 2, 2, 3, 0, 3, 3, 3, 3, 3, 0, 0, 1, 3, 1, 0, 0, 1)
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [112, 372.0]
+    rotation: 0
+    state: enabled
+- name: satellite_tools_pdu_vector_source_0_0_0_0
+  id: satellite_tools_pdu_vector_source
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    vector: (3, 2, 0, 3, 3, 1, 2, 1, 1, 1, 1, 1, 2, 2, 0, 1,  0, 0, 1)
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [112, 420.0]
+    rotation: 0
+    state: enabled
+- name: satellite_tools_pdu_vector_source_0_0_0_0_0
+  id: satellite_tools_pdu_vector_source
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    vector: (3, 1, 0, 3, 3, 2, 1, 2, 2, 2, 2, 2, 1, 1, 0, 2, 0,  0, 0, 1)
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [112, 612.0]
+    rotation: 0
+    state: enabled
+- name: satellite_tools_pdu_vector_source_0_0_0_1
+  id: satellite_tools_pdu_vector_source
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    vector: (3, 3, 2, 1, 1, 0, 3, 0, 0, 0, 0, 0, 3, 3, 2, 0, 2, 0, 0, 1)
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [112, 468.0]
+    rotation: 0
+    state: enabled
+- name: satellite_tools_pdu_vector_source_0_0_0_1_0
+  id: satellite_tools_pdu_vector_source
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    vector: (3, 3, 1, 2, 2, 0, 3, 0, 0, 0, 0, 0, 3, 3, 1, 0, 1, 0, 0, 1)
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [112, 660.0]
+    rotation: 0
+    state: enabled
+- name: satellite_tools_pdu_vector_source_0_0_0_2
+  id: satellite_tools_pdu_vector_source
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    vector: (3, 1, 3, 0, 0, 2, 1, 2, 2, 2, 2, 2, 1, 1, 3, 2, 3, 0, 0, 1)
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [112, 516.0]
+    rotation: 0
+    state: enabled
+- name: satellite_tools_pdu_vector_source_0_0_0_2_0
+  id: satellite_tools_pdu_vector_source
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    vector: (3, 2, 3, 0, 0, 1, 2, 1, 1, 1, 1, 1, 2, 2, 3, 1, 3, 0, 0, 1)
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [112, 708.0]
+    rotation: 0
+    state: enabled
+- name: satellite_tools_pdu_vector_source_0_0_0_3
+  id: satellite_tools_pdu_vector_source
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    vector: (3, 0, 2, 1, 1, 3, 0, 3, 3, 3, 3, 3, 0, 0, 2, 3, 2, 0, 0, 1)
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [112, 564.0]
+    rotation: 0
+    state: enabled
+- name: satellite_tools_pdu_vector_source_0_0_1
+  id: satellite_tools_pdu_vector_source
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    vector: (1,1,1,1,1,0,0,1,0,1,0,0,1,1,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,0,0,0,1,0,1,1,1,1,1)
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [112, 284.0]
+    rotation: 0
+    state: enabled
+
+connections:
+- [blocks_message_strobe_0, strobe, satellite_tools_pdu_vector_source_0_0, trg]
+- [blocks_message_strobe_0, strobe, satellite_tools_pdu_vector_source_0_0_0, trg]
+- [blocks_message_strobe_0, strobe, satellite_tools_pdu_vector_source_0_0_0_0, trg]
+- [blocks_message_strobe_0, strobe, satellite_tools_pdu_vector_source_0_0_0_0_0, trg]
+- [blocks_message_strobe_0, strobe, satellite_tools_pdu_vector_source_0_0_0_1, trg]
+- [blocks_message_strobe_0, strobe, satellite_tools_pdu_vector_source_0_0_0_1_0, trg]
+- [blocks_message_strobe_0, strobe, satellite_tools_pdu_vector_source_0_0_0_2, trg]
+- [blocks_message_strobe_0, strobe, satellite_tools_pdu_vector_source_0_0_0_2_0, trg]
+- [blocks_message_strobe_0, strobe, satellite_tools_pdu_vector_source_0_0_0_3, trg]
+- [blocks_message_strobe_0, strobe, satellite_tools_pdu_vector_source_0_0_1, trg]
+- [comm_tools_pdu_phase_ambiguity_solver_0, msg, blocks_message_debug_0_0, print]
+- [comm_tools_pdu_phase_ambiguity_solver_0, pdu_out, blocks_message_debug_0_0, print]
+- [comm_tools_pdu_phase_ambiguity_solver_0_0, msg, blocks_message_debug_0_0_0, print]
+- [comm_tools_pdu_phase_ambiguity_solver_0_0, pdu_out, blocks_message_debug_0_0_0,
+  print]
+- [satellite_tools_pdu_vector_source_0_0, pdu_out, comm_tools_pdu_phase_ambiguity_solver_0,
+  pdu_in]
+- [satellite_tools_pdu_vector_source_0_0_0, pdu_out, comm_tools_pdu_phase_ambiguity_solver_0_0,
+  pdu_in]
+- [satellite_tools_pdu_vector_source_0_0_0_0, pdu_out, comm_tools_pdu_phase_ambiguity_solver_0_0,
+  pdu_in]
+- [satellite_tools_pdu_vector_source_0_0_0_0_0, pdu_out, comm_tools_pdu_phase_ambiguity_solver_0_0,
+  pdu_in]
+- [satellite_tools_pdu_vector_source_0_0_0_1, pdu_out, comm_tools_pdu_phase_ambiguity_solver_0_0,
+  pdu_in]
+- [satellite_tools_pdu_vector_source_0_0_0_1_0, pdu_out, comm_tools_pdu_phase_ambiguity_solver_0_0,
+  pdu_in]
+- [satellite_tools_pdu_vector_source_0_0_0_2, pdu_out, comm_tools_pdu_phase_ambiguity_solver_0_0,
+  pdu_in]
+- [satellite_tools_pdu_vector_source_0_0_0_2_0, pdu_out, comm_tools_pdu_phase_ambiguity_solver_0_0,
+  pdu_in]
+- [satellite_tools_pdu_vector_source_0_0_0_3, pdu_out, comm_tools_pdu_phase_ambiguity_solver_0_0,
+  pdu_in]
+- [satellite_tools_pdu_vector_source_0_0_1, pdu_out, comm_tools_pdu_phase_ambiguity_solver_0,
+  pdu_in]
+
+metadata:
+  file_format: 1
+  grc_version: 3.10.3.0
