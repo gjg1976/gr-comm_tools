@@ -90,7 +90,7 @@ namespace gr {
     {
       gr::thread::scoped_lock guard(d_mutex);
         
-      auto in_i = static_cast<const input_type*>(input_items[0]);
+      auto in_i = static_cast<const input_type*>(input_items[0])+history()-1;
       auto in_q = static_cast<const input_type*>(input_items[1]);
       auto out = static_cast<output_type*>(output_items[0]);
 
@@ -154,36 +154,36 @@ namespace gr {
       	
       	switch(d_status_phase){
       		case PHASE_0:
-      			out[i*2] = in_i[i];
-      			out[i*2+1] = in_q[i];
+      			out[i*2] = in_i[i+history()-1];
+      			out[i*2+1] = in_q[i+history()-1];
       			break;
       		case PHASE_90:
-      			out[i*2] = in_q[i];
-      			out[i*2+1] = ~in_i[i] & 0x01;
+      			out[i*2] = in_q[i+history()-1];
+      			out[i*2+1] = ~in_i[i+history()-1] & 0x01;
       			break;
       		case PHASE_180:
-      			out[i*2] = ~in_i[i] & 0x01;
-      			out[i*2+1] = ~in_q[i] & 0x01;
+      			out[i*2] = ~in_i[i+history()-1] & 0x01;
+      			out[i*2+1] = ~in_q[i+history()-1] & 0x01;
       			break;
       		case PHASE_270:
-      			out[i*2] = ~in_q[i] & 0x01;
-      			out[i*2+1] = in_i[i];
+      			out[i*2] = ~in_q[i+history()-1] & 0x01;
+      			out[i*2+1] = in_i[i+history()-1];
       			break;
       		case PHASE_INV_0:
-      			out[i*2] = in_q[i];
-      			out[i*2+1] = in_i[i];
+      			out[i*2] = in_q[i+history()-1];
+      			out[i*2+1] = in_i[i+history()-1];
       			break;
       		case PHASE_INV_90:
-      			out[i*2] = in_i[i];
-      			out[i*2+1] = ~in_q[i] & 0x01;
+      			out[i*2] = in_i[i+history()-1];
+      			out[i*2+1] = ~in_q[i+history()-1] & 0x01;
       			break;
       		case PHASE_INV_180:
-      			out[i*2] = ~in_q[i] & 0x01;
-      			out[i*2+1] = ~in_i[i] & 0x01;
+      			out[i*2] = ~in_q[i+history()-1] & 0x01;
+      			out[i*2+1] = ~in_i[i+history()-1] & 0x01;
       			break;
       		case PHASE_INV_270:
-      			out[i*2] = ~in_i[i] & 0x01;
-      			out[i*2+1] = in_q[i];
+      			out[i*2] = ~in_i[i+history()-1] & 0x01;
+      			out[i*2+1] = in_q[i+history()-1];
       			break;
       		default:
       			out[i*2] = 0;

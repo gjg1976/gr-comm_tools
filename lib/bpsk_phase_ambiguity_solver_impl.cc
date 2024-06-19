@@ -13,11 +13,9 @@
 
 namespace gr {
   namespace comm_tools {
-
-
     using input_type = int8_t;
     using output_type = int8_t;
-    
+     
     bpsk_phase_ambiguity_solver::sptr
     bpsk_phase_ambiguity_solver::make(const std::string& sync_word, int tolerance, const std::string& tag_lock_name)
     {
@@ -31,8 +29,8 @@ namespace gr {
      */
     bpsk_phase_ambiguity_solver_impl::bpsk_phase_ambiguity_solver_impl(const std::string& sync_word, int tolerance, const std::string& tag_lock_name)
       : gr::sync_block("bpsk_phase_ambiguity_solver",
-              gr::io_signature::make(1 /* min inputs */, 1 /* max inputs */, sizeof(input_type)),
-              gr::io_signature::make(1 /* min outputs */, 1 /*max outputs */, sizeof(output_type))),
+              gr::io_signature::make(1, 1, sizeof(input_type)),
+              gr::io_signature::make(1, 1, sizeof(output_type))),
               d_reverse_phase(false)
     {
     	
@@ -45,6 +43,7 @@ namespace gr {
         	
 	d_key = pmt::string_to_symbol(tag_lock_name);
     	message_port_register_out(pmt::mp("msg"));
+ 
     }
 
     /*
@@ -58,8 +57,7 @@ namespace gr {
     void 
     bpsk_phase_ambiguity_solver_impl::set_sync_word(const std::string& sync_word)
     {
-        gr::thread::scoped_lock guard(d_mutex);
-        
+        gr::thread::scoped_lock guard(d_mutex);    
     	std::vector<float> taps;
     	for (unsigned int i = 0; i < sync_word.length(); i++) {
         	std::string byteString = sync_word.substr(i, 1);
@@ -82,11 +80,11 @@ namespace gr {
         gr_vector_const_void_star &input_items,
         gr_vector_void_star &output_items)
     {
-      gr::thread::scoped_lock guard(d_mutex);
-        
+      gr::thread::scoped_lock guard(d_mutex);       
+
       auto in = static_cast<const input_type*>(input_items[0]);
       auto out = static_cast<output_type*>(output_items[0]);
-
+      
       int8_t * in_b  = new int8_t[noutput_items];      
       float * in_f  = new float[noutput_items];
       
@@ -96,8 +94,7 @@ namespace gr {
   
   	// Conversion to float required for the FIR filter    
       volk_8i_s32f_convert_32f_u(in_f, in_b, 1, noutput_items);
-            
-      for(int i=0; i<noutput_items; i++)
+      for (int i = 0; i < noutput_items; i++)
       {
       	int result = (int) d_fir_filter->filter(in_f+i);
 
@@ -110,11 +107,10 @@ namespace gr {
       		message_port_pub(pmt::mp("msg"), 
       			pmt::cons(d_key, pmt::from_long(180)));
       	}
-      	
       	if (d_reverse_phase)
-      		out[i] = ~in[i] & 0x01;
+      		out[i] = ~in[i+history()-1] & 0x01;
       	else
-      		out[i] = in[i];
+      		out[i] = in[i+history()-1];
       		
       }
       // Tell runtime system how many output items we produced.
