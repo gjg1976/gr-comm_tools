@@ -34,14 +34,14 @@ namespace gr {
               d_reverse_phase(false)
     {
     	
-	set_sync_word(sync_word);
+	    set_sync_word(sync_word);
         
-	d_map[0] = -1;
-	d_map[1] = 1;
-    	for (unsigned int i = 2; i < s_map_size; i++)
+	    d_map[0] = -1;
+	    d_map[1] = 1;
+        for (unsigned int i = 2; i < s_map_size; i++)
         	d_map[i] = 0;
         	
-	d_key = pmt::string_to_symbol(tag_lock_name);
+	    d_key = pmt::string_to_symbol(tag_lock_name);
     	message_port_register_out(pmt::mp("msg"));
  
     }
@@ -57,7 +57,7 @@ namespace gr {
     void 
     bpsk_phase_ambiguity_solver_impl::set_sync_word(const std::string& sync_word)
     {
-        gr::thread::scoped_lock guard(d_mutex);    
+        //gr::thread::scoped_lock guard(d_mutex);    
     	std::vector<float> taps;
     	for (unsigned int i = 0; i < sync_word.length(); i++) {
         	std::string byteString = sync_word.substr(i, 1);
@@ -66,6 +66,7 @@ namespace gr {
             		taps.insert(taps.begin(),(float)((bytes >> j) & 0x01) * 2 - 1);
         	}
     	}
+
     	if (d_fir_filter == NULL)
         	d_fir_filter = new fir_filter_fff(taps);
     	else
@@ -80,7 +81,7 @@ namespace gr {
         gr_vector_const_void_star &input_items,
         gr_vector_void_star &output_items)
     {
-      gr::thread::scoped_lock guard(d_mutex);       
+     // gr::thread::scoped_lock guard(d_mutex);       
 
       auto in = static_cast<const input_type*>(input_items[0]);
       auto out = static_cast<output_type*>(output_items[0]);
@@ -90,22 +91,25 @@ namespace gr {
       
 	// Map the input to 0=>-1, 1=>+1, any other value to 0
       for (int i = 0; i < noutput_items; i++)
-      	in_b[i] = d_map[in[i]];
-  
+          in_b[i] = d_map[in[i]];
+
   	// Conversion to float required for the FIR filter    
       volk_8i_s32f_convert_32f_u(in_f, in_b, 1, noutput_items);
       for (int i = 0; i < noutput_items; i++)
       {
+
       	int result = (int) d_fir_filter->filter(in_f+i);
 
-      	if (result >= (d_num_filter_taps - d_tolerance)){
-      		d_reverse_phase = false;
-      		message_port_pub(pmt::mp("msg"), 
-      			pmt::cons(d_key, pmt::from_long(0)));
-      	}else if ((result * -1) >= (d_num_filter_taps - d_tolerance)){
-      		d_reverse_phase = true;
-      		message_port_pub(pmt::mp("msg"), 
-      			pmt::cons(d_key, pmt::from_long(180)));
+        if(i >= history()){
+            if (result >= (d_num_filter_taps - d_tolerance) && result <= d_num_filter_taps){
+      		    d_reverse_phase = false;
+      		    message_port_pub(pmt::mp("msg"), 
+      		    	pmt::cons(d_key, pmt::from_long(0)));
+      	    }else if ((result * -1) >= (d_num_filter_taps - d_tolerance) && (result * -1) <= d_num_filter_taps){
+      		    d_reverse_phase = true;
+      		    message_port_pub(pmt::mp("msg"), 
+      		    	pmt::cons(d_key, pmt::from_long(180)));
+      	    }
       	}
       	if (d_reverse_phase)
       		out[i] = ~in[i+history()-1] & 0x01;

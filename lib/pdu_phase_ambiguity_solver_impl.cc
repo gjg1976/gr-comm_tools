@@ -163,47 +163,47 @@ namespace gr {
       		int q_i_result = (int) d_fir_1_filter->filter(in_q_f.data()+i);
       		int q_q_result = (int) d_fir_2_filter->filter(in_q_f.data()+i);
 
-      		if (i_i_result >= d_threshold && q_q_result >= d_threshold){
-      			d_status_phase = PHASE_0;
-      			message_port_pub(pmt::mp("msg"), 
-      				pmt::cons(d_key, pmt::from_long(0)));
-      			break;	        			
-      		}else if ((i_q_result * -1) >= d_threshold && q_i_result >= d_threshold){
-      			d_status_phase = PHASE_90;
-      			message_port_pub(pmt::mp("msg"), 
-      				pmt::cons(d_key, pmt::from_long(90)));
-      				break;	           				
-      		}else if ((i_i_result * -1) >= d_threshold && (q_q_result * -1)  >= d_threshold){
-      			d_status_phase = PHASE_180;
-      			message_port_pub(pmt::mp("msg"), 
-      				pmt::cons(d_key, pmt::from_long(180)));
-      			break;	 
-      		}else if (i_q_result >= d_threshold && (q_i_result * -1)  >= d_threshold){
-      			d_status_phase = PHASE_270;
-      			message_port_pub(pmt::mp("msg"), 
-      				pmt::cons(d_key, pmt::from_long(270)));
-      			break;	 
-      		}else if (i_q_result >= d_threshold && q_i_result >= d_threshold){
-      			d_status_phase = PHASE_INV_0;
-      			message_port_pub(pmt::mp("msg"), 
-      				pmt::cons(d_key, pmt::from_long(-0)));
-      			break;	 
-      		}else if (i_i_result >= d_threshold && (q_q_result * -1) >= d_threshold){
-      			d_status_phase = PHASE_INV_90;
-      			message_port_pub(pmt::mp("msg"), 
-      				pmt::cons(d_key, pmt::from_long(-90)));
-      			break;	 
-      		}else if ((i_q_result * -1) >= d_threshold && (q_i_result * -1)  >= d_threshold){
-      			d_status_phase = PHASE_INV_180;
-      			message_port_pub(pmt::mp("msg"), 
-      				pmt::cons(d_key, pmt::from_long(-180)));
-      			break;	 
-      		}else if ((i_i_result * -1)>= d_threshold && q_q_result >= d_threshold){
-      			d_status_phase = PHASE_INV_270;
-      			message_port_pub(pmt::mp("msg"), 
-      				pmt::cons(d_key, pmt::from_long(-270)));
-      			break;	 
-      		}
+       	    if (i_i_result >= d_threshold && i_i_result <= d_num_filter_taps && 
+      	        q_q_result >= d_threshold && q_q_result <= d_num_filter_taps){
+      	    	d_status_phase = PHASE_0;
+      	    	message_port_pub(pmt::mp("msg"), 
+          			pmt::cons(d_key, pmt::from_long(0)));
+          	}else if ((i_q_result * -1) >= d_threshold && (i_q_result * -1) <= d_num_filter_taps && 
+          	        q_i_result >= d_threshold && q_i_result <= d_num_filter_taps){
+          		d_status_phase = PHASE_90;
+          		message_port_pub(pmt::mp("msg"), 
+          			pmt::cons(d_key, pmt::from_long(90)));
+          	}else if ((i_i_result * -1) >= d_threshold && (i_i_result * -1) <= d_num_filter_taps && 
+          	        (q_q_result * -1)  >= d_threshold && (q_q_result * -1) <= d_num_filter_taps){
+          		d_status_phase = PHASE_180;
+          		message_port_pub(pmt::mp("msg"), 
+          			pmt::cons(d_key, pmt::from_long(180)));
+          	}else if (i_q_result >= d_threshold && i_q_result <= d_num_filter_taps && 
+          	        (q_i_result * -1)  >= d_threshold && (q_i_result * -1) <= d_num_filter_taps){
+          		d_status_phase = PHASE_270;
+          		message_port_pub(pmt::mp("msg"), 
+          			pmt::cons(d_key, pmt::from_long(270)));
+          	}else if (i_q_result >= d_threshold && i_q_result <= d_num_filter_taps && 
+          	        q_i_result >= d_threshold && q_i_result){
+          		d_status_phase = PHASE_INV_0;
+          		message_port_pub(pmt::mp("msg"), 
+          			pmt::cons(d_key, pmt::from_long(-0)));
+          	}else if (i_i_result >= d_threshold && i_i_result <= d_num_filter_taps && 
+          	        (q_q_result * -1) >= d_threshold && (q_q_result * -1) <= d_num_filter_taps){
+          		d_status_phase = PHASE_INV_90;
+          		message_port_pub(pmt::mp("msg"), 
+          			pmt::cons(d_key, pmt::from_long(-90)));
+          	}else if ((i_q_result * -1) >= d_threshold && (i_q_result * -1) <= d_num_filter_taps && 
+          	        (q_i_result * -1)  >= d_threshold && (q_i_result * -1) <= d_num_filter_taps){
+          		d_status_phase = PHASE_INV_180;
+          		message_port_pub(pmt::mp("msg"), 
+          			pmt::cons(d_key, pmt::from_long(-180)));
+          	}else if ((i_i_result * -1)>= d_threshold && (i_i_result * -1) <= d_num_filter_taps && 
+          	        q_q_result >= d_threshold && q_q_result <= d_num_filter_taps){
+          		d_status_phase = PHASE_INV_270;
+          		message_port_pub(pmt::mp("msg"), 
+          			pmt::cons(d_key, pmt::from_long(-270)));
+          	}
            }
 
            switch(d_status_phase){
@@ -305,17 +305,15 @@ namespace gr {
             {
             	int result = (int) d_fir_1_filter->filter(&in_f[i]);
 
-            	if (result >= (d_num_filter_taps - d_tolerance)){
-      			message_port_pub(pmt::mp("msg"), 
-      				pmt::cons(d_key, pmt::from_long(0)));
-      			d_status_phase = PHASE_0;
-      			break;	      				
-      		}else if ((result * -1) >= (d_num_filter_taps - d_tolerance)){
-      			message_port_pub(pmt::mp("msg"), 
-      				pmt::cons(d_key, pmt::from_long(180)));
-      			d_status_phase = PHASE_180;
-      			break;	
-      		}
+                if (result >= (d_num_filter_taps - d_tolerance) && result <= d_num_filter_taps){
+      		       d_status_phase = false;
+      		       message_port_pub(pmt::mp("msg"), 
+      		        	pmt::cons(d_key, pmt::from_long(0)));
+      	        }else if ((result * -1) >= (d_num_filter_taps - d_tolerance) && (result * -1) <= d_num_filter_taps){
+      		        d_status_phase = true;
+      		        message_port_pub(pmt::mp("msg"), 
+      		    	    pmt::cons(d_key, pmt::from_long(180)));
+      	        }
             }
 
             if(d_status_phase == PHASE_180){

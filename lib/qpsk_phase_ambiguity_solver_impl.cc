@@ -117,41 +117,49 @@ namespace gr {
       	int i_q_result = (int) d_q_fir_filter->filter(in_i_f+i);
       	int q_i_result = (int) d_i_fir_filter->filter(in_q_f+i);
       	int q_q_result = (int) d_q_fir_filter->filter(in_q_f+i);
-
-      	if (i_i_result >= d_threshold && q_q_result >= d_threshold){
-      		d_status_phase = PHASE_0;
-      		message_port_pub(pmt::mp("msg"), 
-      			pmt::cons(d_key, pmt::from_long(0)));
-      	}else if ((i_q_result * -1) >= d_threshold && q_i_result >= d_threshold){
-      		d_status_phase = PHASE_90;
-      		message_port_pub(pmt::mp("msg"), 
-      			pmt::cons(d_key, pmt::from_long(90)));
-      	}else if ((i_i_result * -1) >= d_threshold && (q_q_result * -1)  >= d_threshold){
-      		d_status_phase = PHASE_180;
-      		message_port_pub(pmt::mp("msg"), 
-      			pmt::cons(d_key, pmt::from_long(180)));
-      	}else if (i_q_result >= d_threshold && (q_i_result * -1)  >= d_threshold){
-      		d_status_phase = PHASE_270;
-      		message_port_pub(pmt::mp("msg"), 
-      			pmt::cons(d_key, pmt::from_long(270)));
-      	}else if (i_q_result >= d_threshold && q_i_result >= d_threshold){
-      		d_status_phase = PHASE_INV_0;
-      		message_port_pub(pmt::mp("msg"), 
-      			pmt::cons(d_key, pmt::from_long(-0)));
-      	}else if (i_i_result >= d_threshold && (q_q_result * -1) >= d_threshold){
-      		d_status_phase = PHASE_INV_90;
-      		message_port_pub(pmt::mp("msg"), 
-      			pmt::cons(d_key, pmt::from_long(-90)));
-      	}else if ((i_q_result * -1) >= d_threshold && (q_i_result * -1)  >= d_threshold){
-      		d_status_phase = PHASE_INV_180;
-      		message_port_pub(pmt::mp("msg"), 
-      			pmt::cons(d_key, pmt::from_long(-180)));
-      	}else if ((i_i_result * -1)>= d_threshold && q_q_result >= d_threshold){
-      		d_status_phase = PHASE_INV_270;
-      		message_port_pub(pmt::mp("msg"), 
-      			pmt::cons(d_key, pmt::from_long(-270)));
-      	}
-      	
+        if(i >= history()){
+      	    if (i_i_result >= d_threshold && i_i_result <= d_num_filter_taps && 
+      	        q_q_result >= d_threshold && q_q_result <= d_num_filter_taps){
+      	    	d_status_phase = PHASE_0;
+      	    	message_port_pub(pmt::mp("msg"), 
+          			pmt::cons(d_key, pmt::from_long(0)));
+          	}else if ((i_q_result * -1) >= d_threshold && (i_q_result * -1) <= d_num_filter_taps && 
+          	        q_i_result >= d_threshold && q_i_result <= d_num_filter_taps){
+          		d_status_phase = PHASE_90;
+          		message_port_pub(pmt::mp("msg"), 
+          			pmt::cons(d_key, pmt::from_long(90)));
+          	}else if ((i_i_result * -1) >= d_threshold && (i_i_result * -1) <= d_num_filter_taps && 
+          	        (q_q_result * -1)  >= d_threshold && (q_q_result * -1) <= d_num_filter_taps){
+          		d_status_phase = PHASE_180;
+          		message_port_pub(pmt::mp("msg"), 
+          			pmt::cons(d_key, pmt::from_long(180)));
+          	}else if (i_q_result >= d_threshold && i_q_result <= d_num_filter_taps && 
+          	        (q_i_result * -1)  >= d_threshold && (q_i_result * -1) <= d_num_filter_taps){
+          		d_status_phase = PHASE_270;
+          		message_port_pub(pmt::mp("msg"), 
+          			pmt::cons(d_key, pmt::from_long(270)));
+          	}else if (i_q_result >= d_threshold && i_q_result <= d_num_filter_taps && 
+          	        q_i_result >= d_threshold && q_i_result){
+          		d_status_phase = PHASE_INV_0;
+          		message_port_pub(pmt::mp("msg"), 
+          			pmt::cons(d_key, pmt::from_long(-0)));
+          	}else if (i_i_result >= d_threshold && i_i_result <= d_num_filter_taps && 
+          	        (q_q_result * -1) >= d_threshold && (q_q_result * -1) <= d_num_filter_taps){
+          		d_status_phase = PHASE_INV_90;
+          		message_port_pub(pmt::mp("msg"), 
+          			pmt::cons(d_key, pmt::from_long(-90)));
+          	}else if ((i_q_result * -1) >= d_threshold && (i_q_result * -1) <= d_num_filter_taps && 
+          	        (q_i_result * -1)  >= d_threshold && (q_i_result * -1) <= d_num_filter_taps){
+          		d_status_phase = PHASE_INV_180;
+          		message_port_pub(pmt::mp("msg"), 
+          			pmt::cons(d_key, pmt::from_long(-180)));
+          	}else if ((i_i_result * -1)>= d_threshold && (i_i_result * -1) <= d_num_filter_taps && 
+          	        q_q_result >= d_threshold && q_q_result <= d_num_filter_taps){
+          		d_status_phase = PHASE_INV_270;
+          		message_port_pub(pmt::mp("msg"), 
+          			pmt::cons(d_key, pmt::from_long(-270)));
+          	}
+       	}
       	switch(d_status_phase){
       		case PHASE_0:
       			out[i*2] = in_i[i+history()-1];
