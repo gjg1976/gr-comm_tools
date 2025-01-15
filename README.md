@@ -7,20 +7,20 @@ In the docs folder there is a pdf explained the theory behind using standard blo
 
 ## Installation
 To install comm_tools, you should clone the repository and:
-
+```
 mkdir build
 cd build
 cmake ..
 make
 sudo make install
 sudo ldconfig
-
+```
 The module can be uninstalled using:
-
+```
 cd build
 sudo make uninstall
 sudo ldconfig
-
+```
 ## QPSK Phase Ambiguity Solver
 This block will solves the 90º phase rotation and invertion ambiguity in a QPSK demodulated signal when the signal has ASM
 
@@ -35,8 +35,10 @@ Set syncword to look for Phase Ambiguity resolution as hex string, the hex strin
 Set the command message send through the message port when ASM is detected
 
 ### Messages
+#### CTRL
+Input port. A message qith the pair (lock, 0 or 1 value). Normally this block is searching for the Sync mark and applying the phase correction, if frame sync is achieved then, a message pair ("lock", 1) could be addressed to pause the searching while maintaining the last phase correction applied to all input data, if the lock status is lost a message pair ("lock", 0) will resume the searching
 #### LOCK
-The pair (Lock Msg, phase value) message sent when the ASM is detected. Phase value integer could be 0, 90, 180, 270, -0, -90, -180, -270
+Ouput port. The pair (Lock Msg, phase value) message sent when the ASM is detected. Phase value integer could be 0, 90, 180, 270, -0, -90, -180, -270
 
 ### Example Flowgraph
 This example flowgraph qpsk_phase_ambiguity_solver_test_v1.grc is located in the gr-com_tools package
@@ -59,6 +61,8 @@ Set syncword to look for Phase Ambiguity resolution as hex string
 Set the command message send through the message port when ASM is detected
 
 ### Messages
+#### CTRL
+Input port. A message qith the pair (lock, 0 or 1 value). Normally this block is searching for the Sync mark and applying the phase correction, if frame sync is achieved then, a message pair ("lock", 1) could be addressed to pause the searching while maintaining the last phase correction applied to all input data, if the lock status is lost a message pair ("lock", 0) will resume the searching
 #### LOCK
 The pair (Lock Msg, phase value) message sent when the ASM is detected. Phase value integer could be 0 or 180
 ### Example Flowgraph
