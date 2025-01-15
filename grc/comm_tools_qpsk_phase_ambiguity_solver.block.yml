@@ -30,6 +30,9 @@ inputs:
 -   domain: stream
     dtype: byte
     label: q_in
+-   domain: message
+    id: ctrl
+    optional: true 
 outputs:
 -   domain: stream
     dtype: byte
@@ -37,7 +40,7 @@ outputs:
     id: msg
     optional: true
     
-documentation: 'Gustavo Gonzalez
+documentation: |-
     
     Resolves the phase ambiguity of QPSK modulation using through the search of the Sync Mark 
     
@@ -51,7 +54,9 @@ documentation: 'Gustavo Gonzalez
     
         		      
     input = bit stream from QPSK constellation decoder, one per the I symbol bits and another one per Q symbol bits
-    ouput = bit stream with fixed phase'
+    ouput = bit stream with fixed phase
+    
+    input ctrl message port = used to resume/pause the Sync Mark searching. Normally this block is searching for the Sync mark applying the phase correction, if frame sync is achieved then, a message pair ("lock", 1) will pause searching applying current correction to all input data, if lock is lost a message pair ("lock", 0) will resume the searching '
 #  'file_format' specifies the version of the GRC yml format used in the file
 #  and should usually not be changed.
 file_format: 1

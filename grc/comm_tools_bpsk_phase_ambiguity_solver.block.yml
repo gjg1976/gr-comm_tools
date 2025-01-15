@@ -26,6 +26,9 @@ parameters:
 inputs:
 -   domain: stream
     dtype: byte
+-   domain: message
+    id: ctrl
+    optional: true
 
 outputs:
 -   domain: stream
@@ -34,7 +37,7 @@ outputs:
     id: msg
     optional: true
  
-documentation: 'Gustavo Gonzalez
+documentation: |-
 
     Resolves the phase ambiguity of BPSK modulation using through the search of the Sync Mark 
     Parameters:
@@ -44,7 +47,8 @@ documentation: 'Gustavo Gonzalez
     		     (Tag on Lock, 0) when the signal is in phase or (Tag on Lock, 180) when in contra phase
     		      
     input = bit stream from BPSK constellation decoder, 1 bit per symbol
-    ouput = bit stream with fixed phase'
-#  'file_format' specifies the version of the GRC yml format used in the file
-#  and should usually not be changed.
+    ouput = bit stream with fixed phase
+
+    input ctrl message port = used to resume/pause the Sync Mark searching. Normally this block is searching for the Sync mark applying the phase correction, if frame sync is achieved then, a message pair ("lock", 1) will pause searching applying current correction to all input data, if lock is lost a message pair ("lock", 0) will resume the searching 
+
 file_format: 1
