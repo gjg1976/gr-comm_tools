@@ -380,7 +380,7 @@ blocks:
     alias: ''
     append: 'False'
     comment: ''
-    file: /home/modem/041404/qpsk_IQ_out
+    file: ./qpsk_IQ_out.bin
     type: byte
     unbuffered: 'False'
     vlen: '1'
@@ -390,7 +390,7 @@ blocks:
     bus_structure: null
     coordinate: [1688, 972.0]
     rotation: 0
-    state: true
+    state: enabled
 - name: blocks_file_source_0
   id: blocks_file_source
   parameters:
@@ -398,7 +398,7 @@ blocks:
     alias: ''
     begin_tag: pmt.PMT_NIL
     comment: ''
-    file: /home/modem/041404/Viterbi/random_AOS_frames.bin
+    file: ./random_AOS_frames.bin
     length: '0'
     maxoutbuf: '0'
     minoutbuf: '0'
@@ -484,11 +484,12 @@ blocks:
     alias: ''
     comment: ''
     en_uvec: 'True'
+    log_level: info
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1824, 664.0]
+    coordinate: [1752, 656.0]
     rotation: 0
     state: true
 - name: blocks_multiply_xx_0
@@ -576,7 +577,7 @@ blocks:
     bus_structure: null
     coordinate: [1544, 988.0]
     rotation: 0
-    state: true
+    state: enabled
 - name: blocks_selector_0
   id: blocks_selector
   parameters:
@@ -696,7 +697,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1416, 644.0]
+    coordinate: [1408, 632.0]
     rotation: 0
     state: true
 - name: comm_tools_stream_to_iq_streams_0
@@ -881,7 +882,7 @@ blocks:
     bus_structure: null
     coordinate: [1688, 908.0]
     rotation: 0
-    state: true
+    state: enabled
 - name: pdu_utils_tags_to_pdu_X_0
   id: pdu_utils_tags_to_pdu_X
   parameters:
@@ -910,6 +911,42 @@ blocks:
     coordinate: [1448, 880.0]
     rotation: 0
     state: true
+- name: variable_qtgui_msg_push_button_0_1_0_0_1_0
+  id: variable_qtgui_msg_push_button
+  parameters:
+    comment: ''
+    gui_hint: ''
+    label: Lock
+    msgName: lock
+    relBackgroundColor: default
+    relFontColor: default
+    type: int
+    value: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1080, 544.0]
+    rotation: 0
+    state: enabled
+- name: variable_qtgui_msg_push_button_0_1_0_0_1_0_0
+  id: variable_qtgui_msg_push_button
+  parameters:
+    comment: ''
+    gui_hint: ''
+    label: Unlock
+    msgName: lock
+    relBackgroundColor: default
+    relFontColor: default
+    type: int
+    value: '0'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1080, 648.0]
+    rotation: 0
+    state: enabled
 
 connections:
 - [analog_const_source_x_0, '0', blocks_multiply_xx_0, '1']
@@ -967,7 +1004,11 @@ connections:
 - [fec_generic_encoder_0_0, '0', blocks_pack_k_bits_bb_0_0_0_0_0_0, '0']
 - [pdu_pdu_to_tagged_stream_0, '0', blocks_pack_k_bits_bb_0_1_0, '0']
 - [pdu_utils_tags_to_pdu_X_0, pdu_out, pdu_pdu_to_tagged_stream_0, pdus]
+- [variable_qtgui_msg_push_button_0_1_0_0_1_0, pressed, comm_tools_qpsk_phase_ambiguity_solver_0,
+  ctrl]
+- [variable_qtgui_msg_push_button_0_1_0_0_1_0_0, pressed, comm_tools_qpsk_phase_ambiguity_solver_0,
+  ctrl]
 
 metadata:
   file_format: 1
-  grc_version: 3.10.3.0
+  grc_version: 3.10.9.2

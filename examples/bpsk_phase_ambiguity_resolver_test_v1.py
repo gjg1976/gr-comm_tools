@@ -8,25 +8,15 @@
 # Title: BPSK Phase Ambiguity Resolver Test v1
 # Author: Gustavo Gonzalez
 # Description: This flow graph will test BPS Phase Ambiguity resolver block
-# GNU Radio version: 3.10.3.0
-
-from packaging.version import Version as StrictVersion
-
-if __name__ == '__main__':
-    import ctypes
-    import sys
-    if sys.platform.startswith('linux'):
-        try:
-            x11 = ctypes.cdll.LoadLibrary('libX11.so')
-            x11.XInitThreads()
-        except:
-            print("Warning: failed to XInitThreads()")
+# GNU Radio version: 3.10.9.2
 
 from PyQt5 import Qt
+from gnuradio import qtgui
 from PyQt5.QtCore import QObject, pyqtSlot
 from gnuradio import analog
 from gnuradio import blocks
 import pmt
+from gnuradio import blocks, gr
 from gnuradio import comm_tools
 from gnuradio import digital
 from gnuradio import filter
@@ -35,16 +25,15 @@ from gnuradio.filter import firdes
 from gnuradio.fft import window
 import sys
 import signal
+from PyQt5 import Qt
 from argparse import ArgumentParser
 from gnuradio.eng_arg import eng_float, intx
 from gnuradio import eng_notation
 from gnuradio import gr, pdu
+from gnuradio import pdu_utils
 import numpy as np
-import pdu_utils
 
 
-
-from gnuradio import qtgui
 
 class bpsk_phase_ambiguity_resolver_test_v1(gr.top_block, Qt.QWidget):
 
@@ -55,8 +44,8 @@ class bpsk_phase_ambiguity_resolver_test_v1(gr.top_block, Qt.QWidget):
         qtgui.util.check_set_qss()
         try:
             self.setWindowIcon(Qt.QIcon.fromTheme('gnuradio-grc'))
-        except:
-            pass
+        except BaseException as exc:
+            print(f"Qt GUI: Could not set Icon: {str(exc)}", file=sys.stderr)
         self.top_scroll_layout = Qt.QVBoxLayout()
         self.setLayout(self.top_scroll_layout)
         self.top_scroll = Qt.QScrollArea()
@@ -72,12 +61,11 @@ class bpsk_phase_ambiguity_resolver_test_v1(gr.top_block, Qt.QWidget):
         self.settings = Qt.QSettings("GNU Radio", "bpsk_phase_ambiguity_resolver_test_v1")
 
         try:
-            if StrictVersion(Qt.qVersion()) < StrictVersion("5.0.0"):
-                self.restoreGeometry(self.settings.value("geometry").toByteArray())
-            else:
-                self.restoreGeometry(self.settings.value("geometry"))
-        except:
-            pass
+            geometry = self.settings.value("geometry")
+            if geometry:
+                self.restoreGeometry(geometry)
+        except BaseException as exc:
+            print(f"Qt GUI: Could not restore geometry: {str(exc)}", file=sys.stderr)
 
         ##################################################
         # Variables
@@ -96,6 +84,7 @@ class bpsk_phase_ambiguity_resolver_test_v1(gr.top_block, Qt.QWidget):
         ##################################################
         # Blocks
         ##################################################
+
         # Create the options list
         self._variable_qtgui_chooser_1_options = [0, 1]
         # Create the labels list
@@ -116,10 +105,17 @@ class bpsk_phase_ambiguity_resolver_test_v1(gr.top_block, Qt.QWidget):
             self.top_grid_layout.setRowStretch(r, 1)
         for c in range(1, 3):
             self.top_grid_layout.setColumnStretch(c, 1)
+        self.variable_qtgui_msg_push_button_0_1_0_0_1_0_0 = _variable_qtgui_msg_push_button_0_1_0_0_1_0_0_toggle_button = qtgui.MsgPushButton('Unlock', 'lock',0,"default","default")
+        self.variable_qtgui_msg_push_button_0_1_0_0_1_0_0 = _variable_qtgui_msg_push_button_0_1_0_0_1_0_0_toggle_button
+
+        self.top_layout.addWidget(_variable_qtgui_msg_push_button_0_1_0_0_1_0_0_toggle_button)
+        self.variable_qtgui_msg_push_button_0_1_0_0_1_0 = _variable_qtgui_msg_push_button_0_1_0_0_1_0_toggle_button = qtgui.MsgPushButton('Lock', 'lock',1,"default","default")
+        self.variable_qtgui_msg_push_button_0_1_0_0_1_0 = _variable_qtgui_msg_push_button_0_1_0_0_1_0_toggle_button
+
+        self.top_layout.addWidget(_variable_qtgui_msg_push_button_0_1_0_0_1_0_toggle_button)
         self.pdu_utils_tags_to_pdu_X_0 = pdu_utils.tags_to_pdu_b(pmt.intern('syncword'), pmt.intern('EOB'), (1024*8), samp_rate, [], False, 0, 0.0)
         self.pdu_utils_tags_to_pdu_X_0.set_eob_parameters(1, 0)
         self.pdu_utils_tags_to_pdu_X_0.enable_time_debug(False)
-        self.pdu_utils_pack_unpack_0 = pdu_utils.pack_unpack(pdu_utils.MODE_PACK_BYTE, pdu_utils.BIT_ORDER_MSB_FIRST)
         self.pdu_pdu_to_tagged_stream_0 = pdu.pdu_to_tagged_stream(gr.types.byte_t, 'packet_len')
         self.digital_symbol_sync_xx_0 = digital.symbol_sync_cc(
             digital.TED_SIGNAL_TIMES_SLOPE_ML,
@@ -145,15 +141,15 @@ class bpsk_phase_ambiguity_resolver_test_v1(gr.top_block, Qt.QWidget):
             truncate=False)
         self.digital_constellation_decoder_cb_0_1 = digital.constellation_decoder_cb(variable_constellation_rect_qpsk)
         self.comm_tools_bpsk_phase_ambiguity_solver_0 = comm_tools.bpsk_phase_ambiguity_solver('1ACFFC1D', 0, 'LOCK')
-        self.blocks_throttle_0 = blocks.throttle(gr.sizeof_char*1, samp_rate,True)
+        self.blocks_throttle2_0 = blocks.throttle( gr.sizeof_char*1, samp_rate, True, 0 if "auto" == "auto" else max( int(float(0.1) * samp_rate) if "auto" == "time" else int(0.1), 1) )
         self.blocks_selector_0_0_0 = blocks.selector(gr.sizeof_gr_complex*1,variable_qtgui_chooser_1,0)
         self.blocks_selector_0_0_0.set_enabled(True)
         self.blocks_pack_k_bits_bb_0_1_0 = blocks.pack_k_bits_bb(8)
         self.blocks_multiply_xx_0_0 = blocks.multiply_vcc(1)
-        self.blocks_message_debug_0 = blocks.message_debug(True)
-        self.blocks_file_source_0 = blocks.file_source(gr.sizeof_char*1, '/home/modem/041404/Viterbi/random_AOS_frames.bin', True, 0, 0)
+        self.blocks_message_debug_0 = blocks.message_debug(True, gr.log_levels.info)
+        self.blocks_file_source_0 = blocks.file_source(gr.sizeof_char*1, './random_AOS_frames.bin', True, 0, 0)
         self.blocks_file_source_0.set_begin_tag(pmt.PMT_NIL)
-        self.blocks_file_sink_0_1 = blocks.file_sink(gr.sizeof_char*1, '/home/modem/041404/bpsk_output', False)
+        self.blocks_file_sink_0_1 = blocks.file_sink(gr.sizeof_char*1, './bpsk_output.bin', False)
         self.blocks_file_sink_0_1.set_unbuffered(False)
         self.analog_const_source_x_0_0 = analog.sig_source_c(0, analog.GR_CONST_WAVE, 0, 0, -1)
 
@@ -162,15 +158,15 @@ class bpsk_phase_ambiguity_resolver_test_v1(gr.top_block, Qt.QWidget):
         # Connections
         ##################################################
         self.msg_connect((self.comm_tools_bpsk_phase_ambiguity_solver_0, 'msg'), (self.blocks_message_debug_0, 'print'))
-        self.msg_connect((self.pdu_utils_pack_unpack_0, 'pdu_out'), (self.blocks_message_debug_0, 'print'))
         self.msg_connect((self.pdu_utils_tags_to_pdu_X_0, 'pdu_out'), (self.pdu_pdu_to_tagged_stream_0, 'pdus'))
-        self.msg_connect((self.pdu_utils_tags_to_pdu_X_0, 'pdu_out'), (self.pdu_utils_pack_unpack_0, 'pdu_in'))
+        self.msg_connect((self.variable_qtgui_msg_push_button_0_1_0_0_1_0, 'pressed'), (self.comm_tools_bpsk_phase_ambiguity_solver_0, 'ctrl'))
+        self.msg_connect((self.variable_qtgui_msg_push_button_0_1_0_0_1_0_0, 'pressed'), (self.comm_tools_bpsk_phase_ambiguity_solver_0, 'ctrl'))
         self.connect((self.analog_const_source_x_0_0, 0), (self.blocks_multiply_xx_0_0, 1))
-        self.connect((self.blocks_file_source_0, 0), (self.blocks_throttle_0, 0))
+        self.connect((self.blocks_file_source_0, 0), (self.blocks_throttle2_0, 0))
         self.connect((self.blocks_multiply_xx_0_0, 0), (self.blocks_selector_0_0_0, 1))
         self.connect((self.blocks_pack_k_bits_bb_0_1_0, 0), (self.blocks_file_sink_0_1, 0))
         self.connect((self.blocks_selector_0_0_0, 0), (self.digital_symbol_sync_xx_0, 0))
-        self.connect((self.blocks_throttle_0, 0), (self.digital_constellation_modulator_0, 0))
+        self.connect((self.blocks_throttle2_0, 0), (self.digital_constellation_modulator_0, 0))
         self.connect((self.comm_tools_bpsk_phase_ambiguity_solver_0, 0), (self.digital_correlate_access_code_tag_xx_0, 0))
         self.connect((self.digital_constellation_decoder_cb_0_1, 0), (self.comm_tools_bpsk_phase_ambiguity_solver_0, 0))
         self.connect((self.digital_constellation_modulator_0, 0), (self.blocks_multiply_xx_0_0, 0))
@@ -209,6 +205,7 @@ class bpsk_phase_ambiguity_resolver_test_v1(gr.top_block, Qt.QWidget):
         self.sps = sps
         self.set_rrc_taps(firdes.root_raised_cosine(self.nfilts, self.nfilts, 1.0/float(self.sps), 0.35, 45*self.nfilts))
         self.set_samp_rate(64000*self.sps)
+        self.digital_symbol_sync_xx_0.set_sps(self.sps)
 
     def get_nfilts(self):
         return self.nfilts
@@ -230,13 +227,14 @@ class bpsk_phase_ambiguity_resolver_test_v1(gr.top_block, Qt.QWidget):
 
     def set_variable_constellation_rect_qpsk(self, variable_constellation_rect_qpsk):
         self.variable_constellation_rect_qpsk = variable_constellation_rect_qpsk
+        self.digital_constellation_decoder_cb_0_1.set_constellation(self.variable_constellation_rect_qpsk)
 
     def get_samp_rate(self):
         return self.samp_rate
 
     def set_samp_rate(self, samp_rate):
         self.samp_rate = samp_rate
-        self.blocks_throttle_0.set_sample_rate(self.samp_rate)
+        self.blocks_throttle2_0.set_sample_rate(self.samp_rate)
         self.pdu_utils_tags_to_pdu_X_0.set_rate(self.samp_rate)
 
     def get_rrc_taps(self):
@@ -257,9 +255,6 @@ class bpsk_phase_ambiguity_resolver_test_v1(gr.top_block, Qt.QWidget):
 
 def main(top_block_cls=bpsk_phase_ambiguity_resolver_test_v1, options=None):
 
-    if StrictVersion("4.5.0") <= StrictVersion(Qt.qVersion()) < StrictVersion("5.0.0"):
-        style = gr.prefs().get_string('qtgui', 'style', 'raster')
-        Qt.QApplication.setGraphicsSystem(style)
     qapp = Qt.QApplication(sys.argv)
 
     tb = top_block_cls()
