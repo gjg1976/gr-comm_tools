@@ -17,23 +17,24 @@ using namespace gr::filter::kernel;
 
 namespace gr {
   namespace comm_tools {
-
+    enum bpsk_phase {BPSK_PHASE_0 = 0, BPSK_PHASE_180 = 2, BPSK_PHASE_UNK = 8};
+    
     class bpsk_phase_ambiguity_solver_impl : public bpsk_phase_ambiguity_solver
     {
      private:
-      // Nothing to declare in this block.
-	int d_tolerance;
-	bool d_reverse_phase; 
-	        
-        int d_num_filter_taps;
-	fir_filter_fff *d_fir_filter = NULL;
 
-	static constexpr size_t s_map_size = 0x100;
-	unsigned char d_map[s_map_size];
+	    int d_tolerance;
+	    int8_t d_status_phase; 
+	    pmt::pmt_t d_key;
+        bool d_lock;	
+        	        
+        int d_num_filter_taps;
+	    fir_filter_fff *d_fir_filter = NULL;
+
+	    static constexpr size_t s_map_size = 0x100;
+	    unsigned char d_map[s_map_size];
 	
-	pmt::pmt_t d_key;
-	
-	mutable gr::thread::mutex d_mutex;
+    	void handle_msg_lock(pmt::pmt_t msg);
 
      public:
       bpsk_phase_ambiguity_solver_impl(const std::string& sync_word, int tolerance, const std::string& tag_lock_name);

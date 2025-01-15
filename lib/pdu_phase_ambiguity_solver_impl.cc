@@ -60,8 +60,9 @@ namespace gr {
                         	[this](pmt::pmt_t msg) { this->handle_msg_passthrough(msg); });
     		}
     	}
-    
-	d_key = pmt::string_to_symbol(tag_lock_name);
+
+                        	   
+	    d_key = pmt::string_to_symbol(tag_lock_name);
     	message_port_register_out(pmt::mp("msg"));
     }
 
@@ -119,7 +120,7 @@ namespace gr {
     		set_history(0);
     	}
     }
-
+  
     void 
     pdu_phase_ambiguity_solver_impl::handle_msg_passthrough(pmt::pmt_t pdu)
     {

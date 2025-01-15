@@ -21,25 +21,24 @@ namespace gr {
     class pdu_phase_ambiguity_solver_impl : public pdu_phase_ambiguity_solver
     {
      private:
-      // Nothing to declare in this block.
-	int d_tolerance;
-	int d_threshold;
-	int8_t d_status_phase; 
-	int8_t d_modulation;
-			        
-        int d_num_filter_taps;
-	fir_filter_fff *d_fir_1_filter = NULL;
-	fir_filter_fff *d_fir_2_filter = NULL;
 
-	static constexpr size_t s_map_size = 0x100;
-	unsigned char d_map[s_map_size];
-	
-	pmt::pmt_t d_key;
+	    int d_tolerance;
+	    int d_threshold;
+	    int8_t d_status_phase; 
+	    int8_t d_modulation;
+	    pmt::pmt_t d_key;
+        			        
+        int d_num_filter_taps;
+	    fir_filter_fff *d_fir_1_filter = NULL;
+	    fir_filter_fff *d_fir_2_filter = NULL;
+
+	    static constexpr size_t s_map_size = 0x100;
+	    unsigned char d_map[s_map_size];
 
     	void handle_msg_qpsk(pmt::pmt_t pdu);
     	void handle_msg_bpsk(pmt::pmt_t pdu);
     	void handle_msg_passthrough(pmt::pmt_t pdu);
-    
+    	    
      public:
       pdu_phase_ambiguity_solver_impl(uint8_t modulation, const std::string& sync_word, int tolerance, const std::string& tag_lock_name);
       ~pdu_phase_ambiguity_solver_impl();
