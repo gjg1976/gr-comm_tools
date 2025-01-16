@@ -25,6 +25,8 @@ sudo ldconfig
 This block will solves the 90º phase rotation and invertion ambiguity in a QPSK demodulated signal when the signal has ASM
 
 The input signal is the demodulated bit stream with phase ambiguity and the output is the same signal but with the ambiguity solved 
+
+The startup status of this block is phase unknown and unlocked: output are all zeros while search for the sync mark 
 ### Parameters
 (R): Run-time adjustable
 #### Error Tolerance (R)
@@ -51,6 +53,8 @@ In this example, the bytes of and input files are convolutional codec and QPSK m
 This block will solves the 180º phase ambiguity in a BPSK demodulated signal when the signal has a sync mark (ASM)
 
 The input signal is the demodulated bit stream with phase ambiguity and the output is the same signal but with the ambiguity solved 
+
+The startup status of this block is phase unknown and unlocked: output are all zeros while search for the sync mark 
 ### Parameters
 (R): Run-time adjustable
 #### Error Tolerance (R)
