@@ -16,6 +16,8 @@ list(APPEND comm_tools_sources
     qpsk_phase_ambiguity_solver_impl.cc
     stream_to_iq_streams_impl.cc
     pdu_phase_ambiguity_solver_impl.cc
+    latch_selector_impl.cc
+    threshold_tag_impl.cc
 )
 
 set(comm_tools_sources "${comm_tools_sources}" PARENT_SCOPE)

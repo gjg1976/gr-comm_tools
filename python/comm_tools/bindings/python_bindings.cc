@@ -25,6 +25,8 @@ namespace py = pybind11;
     void bind_qpsk_phase_ambiguity_solver(py::module& m);
     void bind_stream_to_iq_streams(py::module& m);
     void bind_pdu_phase_ambiguity_solver(py::module& m);
+    void bind_latch_selector(py::module& m);
+    void bind_threshold_tag(py::module& m);
 // ) END BINDING_FUNCTION_PROTOTYPES
 
 
@@ -57,5 +59,7 @@ PYBIND11_MODULE(comm_tools_python, m)
     bind_qpsk_phase_ambiguity_solver(m);
     bind_stream_to_iq_streams(m);
     bind_pdu_phase_ambiguity_solver(m);
+    bind_latch_selector(m);
+    bind_threshold_tag(m);
     // ) END BINDING_FUNCTION_CALLS
 }

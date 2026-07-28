@@ -32,7 +32,9 @@ list(APPEND comm_tools_python_files
     bpsk_phase_ambiguity_solver_python.cc
     qpsk_phase_ambiguity_solver_python.cc
     stream_to_iq_streams_python.cc
-    pdu_phase_ambiguity_solver_python.cc python_bindings.cc)
+    pdu_phase_ambiguity_solver_python.cc
+    latch_selector_python.cc
+    threshold_tag_python.cc python_bindings.cc)
 
 GR_PYBIND_MAKE_OOT(comm_tools
    ../../..
