@@ -759,6 +759,86 @@ blocks:
     coordinate: [1056, 520.0]
     rotation: 0
     state: true
+- name: comm_tools_latch_selector_0
+  id: comm_tools_latch_selector
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    reset_key: RESET
+    set_key: SET
+    toggle_key: TOGGLE
+    type: byte
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [696, 1472.0]
+    rotation: 0
+    state: enabled
+- name: comm_tools_latch_selector_0_0
+  id: comm_tools_latch_selector
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    reset_key: RESET
+    set_key: SET
+    toggle_key: TOGGLE
+    type: byte
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1208, 1472.0]
+    rotation: 0
+    state: enabled
+- name: comm_tools_latch_selector_0_1
+  id: comm_tools_latch_selector
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    reset_key: RESET
+    set_key: SET
+    toggle_key: TOGGLE
+    type: byte
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [704, 1088.0]
+    rotation: 0
+    state: enabled
+- name: comm_tools_latch_selector_0_1_0
+  id: comm_tools_latch_selector
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    reset_key: RESET
+    set_key: SET
+    toggle_key: TOGGLE
+    type: byte
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1200, 1088.0]
+    rotation: 0
+    state: enabled
 - name: digital_map_bb_0
   id: digital_map_bb
   parameters:
@@ -772,7 +852,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [544, 1532.0]
+    coordinate: [528, 1552.0]
     rotation: 0
     state: true
 - name: digital_map_bb_0_1
@@ -1015,88 +1095,8 @@ blocks:
     coordinate: [80, 488.0]
     rotation: 0
     state: true
-- name: satellite_tools_latch_selector_0
-  id: satellite_tools_latch_selector
-  parameters:
-    affinity: ''
-    alias: ''
-    comment: ''
-    maxoutbuf: '0'
-    minoutbuf: '0'
-    reset_key: RESET
-    set_key: SET
-    toggle_key: TOGGLE
-    type: byte
-    vlen: '1'
-  states:
-    bus_sink: false
-    bus_source: false
-    bus_structure: null
-    coordinate: [688, 1472.0]
-    rotation: 0
-    state: true
-- name: satellite_tools_latch_selector_0_0
-  id: satellite_tools_latch_selector
-  parameters:
-    affinity: ''
-    alias: ''
-    comment: ''
-    maxoutbuf: '0'
-    minoutbuf: '0'
-    reset_key: RESET
-    set_key: SET
-    toggle_key: TOGGLE
-    type: byte
-    vlen: '1'
-  states:
-    bus_sink: false
-    bus_source: false
-    bus_structure: null
-    coordinate: [688, 1088.0]
-    rotation: 0
-    state: true
-- name: satellite_tools_latch_selector_0_0_0
-  id: satellite_tools_latch_selector
-  parameters:
-    affinity: ''
-    alias: ''
-    comment: ''
-    maxoutbuf: '0'
-    minoutbuf: '0'
-    reset_key: RESET
-    set_key: SET
-    toggle_key: TOGGLE
-    type: byte
-    vlen: '1'
-  states:
-    bus_sink: false
-    bus_source: false
-    bus_structure: null
-    coordinate: [1200, 1472.0]
-    rotation: 0
-    state: true
-- name: satellite_tools_latch_selector_0_0_0_0
-  id: satellite_tools_latch_selector
-  parameters:
-    affinity: ''
-    alias: ''
-    comment: ''
-    maxoutbuf: '0'
-    minoutbuf: '0'
-    reset_key: RESET
-    set_key: SET
-    toggle_key: TOGGLE
-    type: byte
-    vlen: '1'
-  states:
-    bus_sink: false
-    bus_source: false
-    bus_structure: null
-    coordinate: [1200, 1088.0]
-    rotation: 0
-    state: true
-- name: satellite_tools_threshold_tag_0
-  id: satellite_tools_threshold_tag
+- name: comm_tools_threshold_tag_0
+  id: comm_tools_threshold_tag
   parameters:
     affinity: ''
     alias: ''
@@ -1105,6 +1105,7 @@ blocks:
     en_low: 'True'
     high: '1'
     high_key: pmt.intern('RESET')
+    initial_state: '0'
     low: '0'
     low_key: pmt.intern('LOW')
     maxoutbuf: '0'
@@ -1116,8 +1117,8 @@ blocks:
     coordinate: [936, 1220.0]
     rotation: 0
     state: true
-- name: satellite_tools_threshold_tag_0_0
-  id: satellite_tools_threshold_tag
+- name: comm_tools_threshold_tag_0_0
+  id: comm_tools_threshold_tag
   parameters:
     affinity: ''
     alias: ''
@@ -1126,6 +1127,7 @@ blocks:
     en_low: 'True'
     high: '1'
     high_key: pmt.intern('SET')
+    initial_state: '0'
     low: '0'
     low_key: pmt.intern('LOW')
     maxoutbuf: '0'
@@ -1137,8 +1139,8 @@ blocks:
     coordinate: [936, 1324.0]
     rotation: 0
     state: true
-- name: satellite_tools_threshold_tag_0_0_0
-  id: satellite_tools_threshold_tag
+- name: comm_tools_threshold_tag_0_0_0
+  id: comm_tools_threshold_tag
   parameters:
     affinity: ''
     alias: ''
@@ -1147,6 +1149,7 @@ blocks:
     en_low: 'True'
     high: '1'
     high_key: pmt.intern('SET')
+    initial_state: '0'
     low: '0'
     low_key: pmt.intern('LOW')
     maxoutbuf: '0'
@@ -1158,8 +1161,8 @@ blocks:
     coordinate: [416, 964.0]
     rotation: 0
     state: true
-- name: satellite_tools_threshold_tag_0_0_0_0
-  id: satellite_tools_threshold_tag
+- name: comm_tools_threshold_tag_0_0_0_0
+  id: comm_tools_threshold_tag
   parameters:
     affinity: ''
     alias: ''
@@ -1168,6 +1171,7 @@ blocks:
     en_low: 'True'
     high: '1'
     high_key: pmt.intern('SET')
+    initial_state: '0'
     low: '0'
     low_key: pmt.intern('LOW')
     maxoutbuf: '0'
@@ -1179,8 +1183,8 @@ blocks:
     coordinate: [416, 1324.0]
     rotation: 0
     state: true
-- name: satellite_tools_threshold_tag_0_1
-  id: satellite_tools_threshold_tag
+- name: comm_tools_threshold_tag_0_1
+  id: comm_tools_threshold_tag
   parameters:
     affinity: ''
     alias: ''
@@ -1189,6 +1193,7 @@ blocks:
     en_low: 'True'
     high: '1'
     high_key: pmt.intern('RESET')
+    initial_state: '0'
     low: '0'
     low_key: pmt.intern('LOW')
     maxoutbuf: '0'
@@ -1200,8 +1205,8 @@ blocks:
     coordinate: [416, 884.0]
     rotation: 0
     state: true
-- name: satellite_tools_threshold_tag_0_1_0
-  id: satellite_tools_threshold_tag
+- name: comm_tools_threshold_tag_0_1_0
+  id: comm_tools_threshold_tag
   parameters:
     affinity: ''
     alias: ''
@@ -1210,6 +1215,7 @@ blocks:
     en_low: 'True'
     high: '1'
     high_key: pmt.intern('RESET')
+    initial_state: '0'
     low: '0'
     low_key: pmt.intern('LOW')
     maxoutbuf: '0'
@@ -1221,8 +1227,8 @@ blocks:
     coordinate: [416, 1244.0]
     rotation: 0
     state: true
-- name: satellite_tools_threshold_tag_1
-  id: satellite_tools_threshold_tag
+- name: comm_tools_threshold_tag_1
+  id: comm_tools_threshold_tag
   parameters:
     affinity: ''
     alias: ''
@@ -1231,6 +1237,7 @@ blocks:
     en_low: 'True'
     high: '1'
     high_key: lock_msg
+    initial_state: '0'
     low: '0'
     low_key: unlock_msg
     maxoutbuf: '0'
@@ -2079,7 +2086,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [352, 1116.0]
+    coordinate: [352, 1112.0]
     rotation: 0
     state: true
 - name: virtual_source_0_0_2_0_0_0
@@ -2105,7 +2112,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [944, 1532.0]
+    coordinate: [984, 1560.0]
     rotation: 0
     state: true
 - name: virtual_source_0_0_3
@@ -2248,7 +2255,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [352, 1500.0]
+    coordinate: [352, 1496.0]
     rotation: 0
     state: true
 - name: virtual_source_0_3
@@ -2295,7 +2302,7 @@ connections:
 - [blocks_or_xx_0_0_0, '0', virtual_sink_0_0_1_1_0_0_0_0, '0']
 - [blocks_or_xx_0_0_0_0, '0', blocks_or_xx_0_0_0_0_0, '0']
 - [blocks_or_xx_0_0_0_0, '0', virtual_sink_0_0_1_1_0_0_0_0_0, '0']
-- [blocks_or_xx_0_0_0_0_0, '0', satellite_tools_threshold_tag_1, '0']
+- [blocks_or_xx_0_0_0_0_0, '0', comm_tools_threshold_tag_1, '0']
 - [blocks_or_xx_0_1, '0', virtual_sink_0_0_1_1_0_0_0, '0']
 - [blocks_or_xx_0_1_0, '0', blocks_or_xx_0_0_0_0_0, '1']
 - [blocks_or_xx_0_1_0, '0', virtual_sink_0_0_1_1_0_0_1_0, '0']
@@ -2312,10 +2319,16 @@ connections:
 - [blocks_threshold_ff_0_1_0_0, '0', blocks_float_to_char_0_1_0_0, '0']
 - [blocks_threshold_ff_0_1_1, '0', blocks_float_to_char_0_0_0, '0']
 - [blocks_threshold_ff_0_2, '0', blocks_float_to_char_0_2, '0']
-- [digital_map_bb_0, '0', satellite_tools_latch_selector_0, '1']
+- [comm_tools_latch_selector_0, '0', comm_tools_latch_selector_0_0, '0']
+- [comm_tools_latch_selector_0, '0', virtual_sink_0_0_1_1_0_1_0, '0']
+- [comm_tools_latch_selector_0_0, '0', blocks_streams_to_stream_0, '1']
+- [comm_tools_latch_selector_0_1, '0', comm_tools_latch_selector_0_1_0, '0']
+- [comm_tools_latch_selector_0_1, '0', virtual_sink_0_0_1_1_0_1, '0']
+- [comm_tools_latch_selector_0_1_0, '0', blocks_streams_to_stream_0, '0']
+- [digital_map_bb_0, '0', comm_tools_latch_selector_0, '1']
 - [digital_map_bb_0_1, '0', blocks_char_to_float_0_0_1, '0']
 - [digital_map_bb_0_1_0, '0', blocks_char_to_float_0_0_1_0, '0']
-- [digital_map_bb_0_2, '0', satellite_tools_latch_selector_0_0, '1']
+- [digital_map_bb_0_2, '0', comm_tools_latch_selector_0_1, '1']
 - [fir_filter_xxx_1_0_1, '0', blocks_multiply_const_vxx_0_1_0_2_0, '0']
 - [fir_filter_xxx_1_0_1, '0', blocks_threshold_ff_0_0, '0']
 - [fir_filter_xxx_1_0_1_0, '0', blocks_multiply_const_vxx_0_1_0_2_0_1_0, '0']
@@ -2325,23 +2338,15 @@ connections:
 - [fir_filter_xxx_1_0_1_0_1_1, '0', blocks_multiply_const_vxx_0_1_0_2_0_1, '0']
 - [fir_filter_xxx_1_0_1_0_1_1, '0', blocks_threshold_ff_0_2, '0']
 - [pad_source_0, '0', blocks_stream_to_streams_0, '0']
-- [satellite_tools_latch_selector_0, '0', satellite_tools_latch_selector_0_0_0, '0']
-- [satellite_tools_latch_selector_0, '0', virtual_sink_0_0_1_1_0_1_0, '0']
-- [satellite_tools_latch_selector_0_0, '0', satellite_tools_latch_selector_0_0_0_0,
-  '0']
-- [satellite_tools_latch_selector_0_0, '0', virtual_sink_0_0_1_1_0_1, '0']
-- [satellite_tools_latch_selector_0_0_0, '0', blocks_streams_to_stream_0, '1']
-- [satellite_tools_latch_selector_0_0_0_0, '0', blocks_streams_to_stream_0, '0']
-- [satellite_tools_threshold_tag_0, cmd, satellite_tools_latch_selector_0_0_0, ctrl]
-- [satellite_tools_threshold_tag_0, cmd, satellite_tools_latch_selector_0_0_0_0, ctrl]
-- [satellite_tools_threshold_tag_0_0, cmd, satellite_tools_latch_selector_0_0_0, ctrl]
-- [satellite_tools_threshold_tag_0_0, cmd, satellite_tools_latch_selector_0_0_0_0,
-  ctrl]
-- [satellite_tools_threshold_tag_0_0_0, cmd, satellite_tools_latch_selector_0_0, ctrl]
-- [satellite_tools_threshold_tag_0_0_0_0, cmd, satellite_tools_latch_selector_0, ctrl]
-- [satellite_tools_threshold_tag_0_1, cmd, satellite_tools_latch_selector_0_0, ctrl]
-- [satellite_tools_threshold_tag_0_1_0, cmd, satellite_tools_latch_selector_0, ctrl]
-- [satellite_tools_threshold_tag_1, cmd, pad_sink_0_0, in]
+- [comm_tools_threshold_tag_0, cmd, comm_tools_latch_selector_0_0, ctrl]
+- [comm_tools_threshold_tag_0, cmd, comm_tools_latch_selector_0_1_0, ctrl]
+- [comm_tools_threshold_tag_0_0, cmd, comm_tools_latch_selector_0_0, ctrl]
+- [comm_tools_threshold_tag_0_0, cmd, comm_tools_latch_selector_0_1_0, ctrl]
+- [comm_tools_threshold_tag_0_0_0, cmd, comm_tools_latch_selector_0_1, ctrl]
+- [comm_tools_threshold_tag_0_0_0_0, cmd, comm_tools_latch_selector_0, ctrl]
+- [comm_tools_threshold_tag_0_1, cmd, comm_tools_latch_selector_0_1, ctrl]
+- [comm_tools_threshold_tag_0_1_0, cmd, comm_tools_latch_selector_0, ctrl]
+- [comm_tools_threshold_tag_1, cmd, pad_sink_0_0, in]
 - [virtual_source_0, '0', blocks_and_xx_0_1_0, '0']
 - [virtual_source_0_0, '0', blocks_and_xx_0_1_0, '1']
 - [virtual_source_0_0_0_0_0_0_0_0, '0', blocks_or_xx_0, '2']
@@ -2372,28 +2377,29 @@ connections:
 - [virtual_source_0_0_1_0, '0', blocks_and_xx_0_1_0_1_0, '1']
 - [virtual_source_0_0_1_0_0, '0', blocks_and_xx_0_1_0_1_0_0, '1']
 - [virtual_source_0_0_1_1, '0', blocks_and_xx_0_1_0_1_1, '1']
-- [virtual_source_0_0_1_2, '0', satellite_tools_threshold_tag_0_1, '0']
-- [virtual_source_0_0_1_2_0, '0', satellite_tools_threshold_tag_0_1_0, '0']
-- [virtual_source_0_0_1_2_0_0, '0', satellite_tools_threshold_tag_0_0, '0']
+- [virtual_source_0_0_1_2, '0', comm_tools_threshold_tag_0_1, '0']
+- [virtual_source_0_0_1_2_0, '0', comm_tools_threshold_tag_0_1_0, '0']
+- [virtual_source_0_0_1_2_0_0, '0', comm_tools_threshold_tag_0_0, '0']
 - [virtual_source_0_0_2, '0', blocks_and_xx_0_1_0_2, '1']
 - [virtual_source_0_0_2_0, '0', blocks_and_xx_0_1_0_2_0, '1']
+- [virtual_source_0_0_2_0_0, '0', comm_tools_latch_selector_0_1, '0']
 - [virtual_source_0_0_2_0_0, '0', digital_map_bb_0_2, '0']
-- [virtual_source_0_0_2_0_0, '0', satellite_tools_latch_selector_0_0, '0']
-- [virtual_source_0_0_2_0_0_0, '0', satellite_tools_latch_selector_0_0_0_0, '1']
-- [virtual_source_0_0_2_0_0_0_0, '0', satellite_tools_latch_selector_0_0_0, '1']
+- [virtual_source_0_0_2_0_0_0, '0', comm_tools_latch_selector_0_1_0, '1']
+- [virtual_source_0_0_2_0_0_0_0, '0', comm_tools_latch_selector_0_0, '1']
 - [virtual_source_0_0_3, '0', blocks_and_xx_0_1_0_3, '1']
 - [virtual_source_0_1, '0', blocks_and_xx_0_1_0_1, '0']
 - [virtual_source_0_1_0, '0', blocks_and_xx_0_1_0_1_0, '0']
 - [virtual_source_0_1_0_0, '0', blocks_and_xx_0_1_0_1_0_0, '0']
 - [virtual_source_0_1_1, '0', blocks_and_xx_0_1_0_1_1, '0']
-- [virtual_source_0_1_2, '0', satellite_tools_threshold_tag_0_0_0, '0']
-- [virtual_source_0_1_2_0, '0', satellite_tools_threshold_tag_0_0_0_0, '0']
-- [virtual_source_0_1_2_0_0, '0', satellite_tools_threshold_tag_0, '0']
+- [virtual_source_0_1_2, '0', comm_tools_threshold_tag_0_0_0, '0']
+- [virtual_source_0_1_2_0, '0', comm_tools_threshold_tag_0_0_0_0, '0']
+- [virtual_source_0_1_2_0_0, '0', comm_tools_threshold_tag_0, '0']
 - [virtual_source_0_2, '0', blocks_and_xx_0_1_0_2, '0']
 - [virtual_source_0_2_0, '0', blocks_and_xx_0_1_0_2_0, '0']
+- [virtual_source_0_2_0_0, '0', comm_tools_latch_selector_0, '0']
 - [virtual_source_0_2_0_0, '0', digital_map_bb_0, '0']
-- [virtual_source_0_2_0_0, '0', satellite_tools_latch_selector_0, '0']
 - [virtual_source_0_3, '0', blocks_and_xx_0_1_0_3, '0']
 
 metadata:
   file_format: 1
+  grc_version: 3.10.9.2
