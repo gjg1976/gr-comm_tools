@@ -1,0 +1,69 @@
+id: comm_tools_threshold_tag
+label: Threshold to Tags
+category: '[Comm Tools]/Helpers'
+
+templates:
+  imports: |-
+        from gnuradio import comm_tools
+        import pmt
+  make: comm_tools.threshold_tag(${low}, ${high}, ${high_key}, ${low_key}, ${en_high}, ${en_low}, ${initial_state})
+  callbacks:
+  - set_hi(${high})
+  - set_lo(${low})
+
+parameters:
+-   id: low
+    label: Low
+    dtype: int
+    default: '0'
+-   id: high
+    label: High
+    dtype: int
+    default: '1'
+-   id: high_key
+    label: Set High Tag Key
+    dtype: raw
+    default: HIGH
+    hide: part
+-   id: en_high
+    label: Enable High msg
+    dtype: bool
+    default: 'True'
+    options: ['False', 'True']
+    option_labels: ['No', 'Yes']
+    hide: part      
+-   id: low_key
+    label: Set Low Tag Key
+    dtype: raw
+    default: LOW
+    hide: part     
+-   id: en_low
+    label: Enable Low msg
+    dtype: bool
+    default: 'True'
+    options: ['False', 'True']
+    option_labels: ['No', 'Yes']
+    hide: part     
+-   id: initial_state
+    label: Initial State
+    dtype: int
+    default: '0'
+    options: ['0', '1']
+    option_labels: ['0', '1']
+    hide: part     
+    
+inputs:
+-   domain: stream
+    dtype: byte
+    
+outputs:
+-   domain: message
+    id: cmd
+    optional: true  
+
+documentation: 'Gustavo Gonzalez
+
+    Similar to the Threshold block of GNU Radio distribution, but generates a command on detection
+    
+   '
+file_format: 1

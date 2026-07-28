@@ -10,5 +10,7 @@ install(FILES
     comm_tools_bpsk_phase_ambiguity_solver.block.yml
     comm_tools_qpsk_phase_ambiguity_solver.block.yml
     comm_tools_stream_to_iq_streams.block.yml
-    comm_tools_pdu_phase_ambiguity_solver.block.yml DESTINATION share/gnuradio/grc/blocks
+    comm_tools_pdu_phase_ambiguity_solver.block.yml
+    comm_tools_latch_selector.block.yml
+    comm_tools_threshold_tag.block.yml DESTINATION share/gnuradio/grc/blocks
 )

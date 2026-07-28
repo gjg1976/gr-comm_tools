@@ -1,0 +1,76 @@
+id: comm_tools_latch_selector
+label: Latch Selector
+category: '[Comm Tools]/Helpers'
+
+templates:
+  imports: |-
+        from gnuradio import comm_tools
+        import pmt
+  make: comm_tools.latch_selector(${type.size}*${vlen},pmt.intern(${set_key}), pmt.intern(${reset_key}), pmt.intern(${toggle_key}))
+  callbacks:
+  - set_set_key(${set_key})
+  - set_reset_key(${reset_key})
+  - set_toggle_key(${toggle_key})
+
+parameters:
+-   id: type
+    label: Type
+    dtype: enum
+    options: [complex, float, int, short, byte]
+    option_attributes:
+        size: [gr.sizeof_gr_complex, gr.sizeof_float, gr.sizeof_int, gr.sizeof_short,
+            gr.sizeof_char]
+    hide: part
+-   id: set_key
+    label: Set Tag Key
+    dtype: string
+    default: SET
+    hide: part    
+-   id: reset_key
+    label: Reset Tag Key
+    dtype: string
+    default: RESET
+    hide: part    
+-   id: toggle_key
+    label: Toggle Tag Key
+    dtype: string
+    default: TOGGLE
+    hide: part    
+-   id: vlen
+    label: Vec Length
+    dtype: int
+    default: '1'
+    hide: ${ 'part' if vlen == 1 else 'none' }    
+
+inputs:
+- domain: message
+  id: ctrl
+  optional: true
+- label: Reset
+  domain: stream
+  dtype: ${ type }
+  vlen: ${ vlen }
+- label: Set
+  domain: stream
+  dtype: ${ type }
+  vlen: ${ vlen }
+
+
+outputs:
+- domain: stream
+  label: out
+  domain: stream
+  dtype: ${ type }
+  vlen: ${ vlen }
+ 
+asserts:
+- ${ vlen > 0 }
+  
+documentation: 'Gustavo Gonzalez
+
+    Connect the input data Set or Reset according to the Control input Msg.
+    Default Selection is Reset Input
+    
+   '
+   
+file_format: 1

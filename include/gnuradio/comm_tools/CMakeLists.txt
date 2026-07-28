@@ -14,5 +14,7 @@ install(FILES
     bpsk_phase_ambiguity_solver.h
     qpsk_phase_ambiguity_solver.h
     stream_to_iq_streams.h
-    pdu_phase_ambiguity_solver.h DESTINATION include/gnuradio/comm_tools
+    pdu_phase_ambiguity_solver.h
+    latch_selector.h
+    threshold_tag.h DESTINATION include/gnuradio/comm_tools
 )
